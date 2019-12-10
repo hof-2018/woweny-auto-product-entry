@@ -5,6 +5,8 @@ import com.hof.wovenyautoproductentry.util.SeleniumUtils;
 import org.openqa.selenium.WebDriver;
 import org.springframework.stereotype.Service;
 
+import java.net.URL;
+
 @Service
 public class EtsyRugEntryService {
     public void execute() throws InterruptedException {
@@ -28,7 +30,10 @@ public class EtsyRugEntryService {
 
 
         //////////Photo
-        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"listing-edit-image-upload\"]", "51547.JPG", "");
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL url = classLoader.getResource("51547.JPG");
+
+        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"listing-edit-image-upload\"]", url.getPath(), "");
         //TODO Read photos from remote
         //sendKeysToElement(driver,"//*[@id=\"listing-edit-image-upload\"]","https://cdn03.ciceksepeti.com/cicek/at1677-1/XL/cicek-sepeti-100-kirmizi-gul-cicek-demeti-at1677-1-8d6463aee156183-4cb02247.jpg");
 
