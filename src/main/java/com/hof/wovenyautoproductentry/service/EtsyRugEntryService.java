@@ -22,7 +22,7 @@ public class EtsyRugEntryService {
         //wait.until(ExpectedConditions.elementToBeClickable(findElement(driver,"//*[@id=\"shop-mgr-button\"]")));
         Thread.sleep(3000);
         //Go to creation page
-        SeleniumUtils.openUrl(driver,ETSY_CREATION_PAGE );
+        SeleniumUtils.openUrl(driver, ETSY_CREATION_PAGE);
 
         //TODO read excel file
 

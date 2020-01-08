@@ -12,19 +12,19 @@ import java.util.Date;
 @Component
 public class SchedulerController {
 
-    private  final EtsyRugEntryService etsyRugEntryService;
+    private final EtsyRugEntryService etsyRugEntryService;
 
     public SchedulerController(EtsyRugEntryService etsyRugEntryService) {
         this.etsyRugEntryService = etsyRugEntryService;
     }
 
     @Scheduled(cron = "10 11 22 * * ?")
-    public void etsyRugEntry(){
+    public void etsyRugEntry() {
         System.out.println(
                 "Cron -" + System.currentTimeMillis() / 1000);
     }
 
-    @Scheduled(fixedRate = 1000*100)
+    @Scheduled(fixedRate = 1000 * 100)
     public void scheduleEtsyRugEntry() throws InterruptedException {
         System.out.println(
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Etsy rug entry job is started.");

@@ -13,7 +13,7 @@ public class SeleniumUtils {
         ChromeWebDriverManager chromeWebDriverManager = new ChromeWebDriverManager();
         WebDriver driver = chromeWebDriverManager.getChromeDriver();
         driver.get(url);
-        return  driver;
+        return driver;
     }
 
     public static void openUrl(WebDriver driver, String url) {
@@ -48,8 +48,6 @@ public class SeleniumUtils {
         Select dropdown = new Select(findElementByXpath(driver, xpath));
         dropdown.selectByVisibleText(Selection);
     }
-
-
 
 
 }
