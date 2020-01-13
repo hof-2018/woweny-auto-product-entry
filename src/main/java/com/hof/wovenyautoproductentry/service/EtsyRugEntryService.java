@@ -1,14 +1,16 @@
 package com.hof.wovenyautoproductentry.service;
 
-import com.hof.wovenyautoproductentry.manager.ChromeWebDriverManager;
 import com.hof.wovenyautoproductentry.util.SeleniumUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.springframework.stereotype.Service;
 
 import java.net.URL;
 
 @Service
+@Slf4j
 public class EtsyRugEntryService {
+
     public void execute() throws InterruptedException {
         String ETSY_DASHBOARD_PAGE = "https://www.etsy.com/your/shops/me/dashboard?ref=mcpa";
         String ETSY_CREATION_PAGE = "https://www.etsy.com/your/shops/WovenHane/tools/listings/create";
@@ -81,4 +83,5 @@ public class EtsyRugEntryService {
         System.out.println("Program bitti.");
 
     }
+
 }

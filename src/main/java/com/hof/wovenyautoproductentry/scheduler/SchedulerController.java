@@ -24,7 +24,7 @@ public class SchedulerController {
                 "Cron -" + System.currentTimeMillis() / 1000);
     }
 
-    @Scheduled(fixedRate = 1000 * 100)
+    //@Scheduled(fixedRate = 1000 * 100)
     public void scheduleEtsyRugEntry() throws InterruptedException {
         System.out.println(
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Etsy rug entry job is started.");
@@ -32,5 +32,7 @@ public class SchedulerController {
         System.out.println(
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Etsy rug entry job is finished.");
     }
+
+
 
 }
