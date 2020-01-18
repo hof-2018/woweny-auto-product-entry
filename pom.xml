@@ -14,8 +14,16 @@
     <name>wovenyautoproductentry</name>
     <description>Woveny Auto Product Entry</description>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <properties>
         <java.version>11</java.version>
+        <EtsyJavaApi.version>1.0</EtsyJavaApi.version>
     </properties>
 
     <dependencies>
@@ -85,6 +93,12 @@
             <groupId>com.google.apis</groupId>
             <artifactId>google-api-services-sheets</artifactId>
             <version>v4-rev493-1.23.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.HOF-2018</groupId>
+            <artifactId>EtsyJavaApi</artifactId>
+            <version>${EtsyJavaApi.version}</version>
         </dependency>
     </dependencies>
 
