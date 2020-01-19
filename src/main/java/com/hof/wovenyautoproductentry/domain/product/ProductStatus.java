@@ -6,7 +6,7 @@ public enum  ProductStatus {
 
     private int value;
     ProductStatus(int value) {
-
+        this.value = value;
     }
     public int getValue() {
         return value;

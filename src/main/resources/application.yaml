@@ -7,7 +7,7 @@ spring:
     database: postgresql
     generate-ddl: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
 #docker run --name pg-docker -e POSTGRES_PASSWORD=12345 -e POSTGRES_USER= root -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres
 #ui docker run  --name admin-portal-db -e POSTGRES_PASSWORD=123qwe  -e POSTGRES_USER= root -d -p 5441:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres

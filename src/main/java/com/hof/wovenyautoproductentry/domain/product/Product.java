@@ -12,7 +12,7 @@ public class Product {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private Long skuNumber;
+    private String skuNumber;
 
     private String name;
     private String categoryPath;
@@ -30,8 +30,7 @@ public class Product {
     private String widthByInches;
     @ElementCollection
     private Set<String> metaKeyword = new HashSet<>();
-    @ElementCollection
-    private Set<String> metaDescription = new HashSet<>();
+    private String metaDescription;
     private Date wovenyCreateDate;
     private Date wovenyModifiedDate;
     private String age;
@@ -40,10 +39,17 @@ public class Product {
     @ElementCollection
     private Set<String> materials = new HashSet<>();
     private String region;
+    private String size;
     @ElementCollection
     private Set<String> styles = new HashSet<>();
     @Enumerated(EnumType.STRING)
     private Weave weave;
+
+    @Enumerated(EnumType.STRING)
+    private ProductType productType;
+
+    @Enumerated(EnumType.STRING)
+    private LeafCategory leafCategory;
 
     public Product() {
     }
@@ -56,11 +62,11 @@ public class Product {
         this.id = id;
     }
 
-    public Long getSkuNumber() {
+    public String getSkuNumber() {
         return skuNumber;
     }
 
-    public void setSkuNumber(Long skuNumber) {
+    public void setSkuNumber(String skuNumber) {
         this.skuNumber = skuNumber;
     }
 
@@ -168,11 +174,11 @@ public class Product {
         this.metaKeyword = metaKeyword;
     }
 
-    public Set<String> getMetaDescription() {
+    public String getMetaDescription() {
         return metaDescription;
     }
 
-    public void setMetaDescription(Set<String> metaDescription) {
+    public void setMetaDescription(String metaDescription) {
         this.metaDescription = metaDescription;
     }
 
@@ -238,5 +244,29 @@ public class Product {
 
     public void setWeave(Weave weave) {
         this.weave = weave;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
+    }
+
+    public LeafCategory getLeafCategory() {
+        return leafCategory;
+    }
+
+    public void setLeafCategory(LeafCategory leafCategory) {
+        this.leafCategory = leafCategory;
     }
 }
