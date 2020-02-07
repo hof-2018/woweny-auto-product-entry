@@ -2,6 +2,7 @@ package com.hof.wovenyautoproductentry.domain.product;
 
 public enum Weave {
     Handwoven, Handknotted;
+    //TODO uppercase
 
     public static Weave weaveFactory(String weave) {
 
@@ -11,7 +12,6 @@ public enum Weave {
         if (weave.equalsIgnoreCase("handknotted"))
             return Handknotted;
 
-        return null;          // todo null -> exception
-
+        return null;          // TODO null -> exception
     }
 }

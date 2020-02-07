@@ -1,9 +1,6 @@
 package com.hof.wovenyautoproductentry.scheduler;
 
-import com.hof.wovenyautoproductentry.manager.ChromeWebDriverManager;
 import com.hof.wovenyautoproductentry.service.EtsyRugEntryService;
-import lombok.Data;
-import org.openqa.selenium.WebDriver;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 

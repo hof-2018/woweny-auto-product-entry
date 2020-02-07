@@ -2,7 +2,7 @@ package com.hof.wovenyautoproductentry.domain.product;
 
 public enum  ProductType {
     RUGS, PILLOWS;
-
+    //TODO singular names!
 
     public static ProductType productTypeFactory(String weave) {
 
@@ -12,6 +12,6 @@ public enum  ProductType {
         if (weave.equalsIgnoreCase("PILLOWS"))
             return PILLOWS;
 
-        return null;         // todo ?
+        return null;         // TODO exception
     }
 }

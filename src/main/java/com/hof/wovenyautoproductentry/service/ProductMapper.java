@@ -20,7 +20,7 @@ public class ProductMapper {
 
 
     public Product csvRecordToProductEntity(CSVRecord record) {
-
+        //TODO field naming(lengthfrom), underscore usage
         String skuNumber = trimFields(record.get(MODEL_HEADER));
         String name = trimFields(record.get(NAME));
         String category = trimFields(record.get(CATEGORY));
@@ -90,10 +90,12 @@ public class ProductMapper {
     }
 
     private List<String> splitByTripleColon(String field) {
+        //FIXME if empty check!
         return Arrays.asList(field.split(":::"));
     }
 
     private List<String> splitByComma(String field) {
+        //FIXME if empty check!
         List<String> fields = Arrays.asList(field.split(","));
         return fields.stream().map(this::removeFirstCharacterIfItIsSpace).collect(Collectors.toList());
     }
@@ -130,6 +132,7 @@ public class ProductMapper {
     private ProductType getProductType(String categoryPath){
         // --> RUGS///HANDKNOTTED RUGS:::RUGS///HANDKNOTTED RUGS///Turkish Oushak:::RUGS
         // PILLOWS:::PILLOWS///16"x16"(40x40cm)
+        //TODO sort by size get longest then manipulate
         List<String> categories = Arrays.asList(categoryPath.split("///"));
         List<String> subCategories = Arrays.asList(categories.get(0).split(":::"));
         return ProductType.productTypeFactory(subCategories.get(0));
@@ -138,6 +141,7 @@ public class ProductMapper {
     private LeafCategory getLeafCategory (String categoryPath){
         // --> RUGS///HANDKNOTTED RUGS:::RUGS///HANDKNOTTED RUGS///Turkish Oushak:::RUGS
         // PILLOWS:::PILLOWS///16"x16"(40x40cm)
+        //TODO sort by size get longest then manipulate && trims space between words!!
         List<String> fields = Arrays.asList(categoryPath.split("///"));
         List<String> leaf = Arrays.asList(fields.get(fields.size()-1).split(":::"));
         return LeafCategory.findLeafCategoryValue(leaf.get(0));
