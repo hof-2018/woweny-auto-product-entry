@@ -24,13 +24,18 @@ public class SeleniumUtils {
         return driver.findElement(By.xpath(xpath));
     }
 
+    public static WebElement findElementByName(WebDriver driver, String name) {
+        return driver.findElement(By.name(name));
+    }
+
     public static void clickElement(WebDriver driver, String xpath) {
 
         WebElement element = findElementByXpath(driver, xpath);
         element.click();
     }
 
-    public static void sendKeysToElement(WebDriver driver, String xpath, String keys, String submit) throws InterruptedException {
+    //todo remove
+ /*   public static void sendKeysToElement(WebDriver driver, String xpath, String keys, String submit) throws InterruptedException {
         WebElement element = findElementByXpath(driver, xpath);
         element.sendKeys(keys);
         if (submit.equals("E")) {
@@ -42,10 +47,45 @@ public class SeleniumUtils {
             element.sendKeys(Keys.SPACE);
         }
 
+    }*/
+
+    public static void sendKeysToElement(WebDriver driver, String xpath, String keys) {
+        WebElement element = findElementByXpath(driver, xpath);
+        element.sendKeys(keys);
     }
 
-    public static void selectFromElement(WebDriver driver, String xpath, String Selection) {
+
+    public static void sendKeysToElementWithSubmitEnter(WebDriver driver, String xpath, String keys) throws InterruptedException {
+        WebElement element = findElementByXpath(driver, xpath);
+        //element.sendKeys(keys);
+        Thread.sleep(2000);
+        element.sendKeys(Keys.ENTER);
+    }
+
+    public static void sendKeysToElementWithSubmitSpace(WebDriver driver, String xpath) throws InterruptedException {
+        WebElement element = findElementByXpath(driver, xpath);
+        Thread.sleep(2000);
+        element.sendKeys(Keys.SPACE);
+    }
+
+    public static void sendKeysToElementWithSubmitDownEnter(WebDriver driver, String xpath, String keys) throws InterruptedException {
+        WebElement element = findElementByXpath(driver, xpath);
+        element.sendKeys(keys);
+        Thread.sleep(2000);
+        element.sendKeys(Keys.ARROW_DOWN);
+        Thread.sleep(1000);
+        element.sendKeys(Keys.ENTER);
+    }
+
+    public static void selectFromElement(WebDriver driver, String xpath, String Selection) throws InterruptedException {
         Select dropdown = new Select(findElementByXpath(driver, xpath));
+        Thread.sleep(1000);
+        dropdown.selectByVisibleText(Selection);
+    }
+
+    public static void selectFromElementByName(WebDriver driver, String name, String Selection) throws InterruptedException {
+        Select dropdown = new Select(findElementByName(driver, name));
+        Thread.sleep(1000);
         dropdown.selectByVisibleText(Selection);
     }
 

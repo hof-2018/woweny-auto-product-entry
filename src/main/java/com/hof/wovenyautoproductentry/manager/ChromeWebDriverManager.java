@@ -17,7 +17,9 @@ public class ChromeWebDriverManager {
         //options.addArguments("--no-sandbox"); // Bypass OS security model, MUST BE THE VERY FIRST OPTION
         //options.addArguments("--headless");
 
+        // todo charish etsy farkı
         //options.setExperimentalOption("useAutomationExtension", false);
+        options.setExperimentalOption("debuggerAddress", "localhost:90147");
         //options.addArguments("disable-infobars"); // disabling infobars
         //options.addArguments("--disable-extensions"); // disabling extensions
         //options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
