@@ -48,8 +48,10 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ProductType productType;
 
-    @Enumerated(EnumType.STRING)
-    private LeafCategory leafCategory;
+    private String leafCategory;
+
+    private Boolean isUploadedChairish;
+
 
     public Product() {
     }
@@ -262,11 +264,19 @@ public class Product {
         this.productType = productType;
     }
 
-    public LeafCategory getLeafCategory() {
+    public String  getLeafCategory() {
         return leafCategory;
     }
 
-    public void setLeafCategory(LeafCategory leafCategory) {
+    public void setLeafCategory(String leafCategory) {
         this.leafCategory = leafCategory;
+    }
+
+    public Boolean getUploadedChairish() {
+        return isUploadedChairish;
+    }
+
+    public void setUploadedChairish(Boolean uploadedChairish) {
+        isUploadedChairish = uploadedChairish;
     }
 }

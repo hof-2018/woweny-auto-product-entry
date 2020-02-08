@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @Component
 public class DbInitializer {
-    private static final String CSV_FILE_PATH = "export_2020-01-08(1).csv";
+    private static final String CSV_FILE_PATH = "export_2020-02-08.csv";
     private static final Character CSV_SPLIT_BY = ';';
 
     private final CSVReader csvReader;
@@ -24,7 +24,7 @@ public class DbInitializer {
         this.productRepository = productRepository;
     }
 
-    //@PostConstruct
+    @PostConstruct
     void initialize(){
         String filePath = ClassLoader.getSystemResource(CSV_FILE_PATH).getPath();
         try {

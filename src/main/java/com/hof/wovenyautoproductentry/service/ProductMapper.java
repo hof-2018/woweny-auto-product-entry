@@ -1,16 +1,23 @@
 package com.hof.wovenyautoproductentry.service;
 
-import com.hof.wovenyautoproductentry.domain.product.*;
+import com.hof.wovenyautoproductentry.domain.product.LeafCategory;
+import com.hof.wovenyautoproductentry.domain.product.Product;
+import com.hof.wovenyautoproductentry.domain.product.ProductBuilder;
+import com.hof.wovenyautoproductentry.domain.product.ProductStatus;
+import com.hof.wovenyautoproductentry.domain.product.ProductType;
+import com.hof.wovenyautoproductentry.domain.product.Weave;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.hof.wovenyautoproductentry.constants.CsvHeaderConstants.*;
@@ -18,6 +25,11 @@ import static com.hof.wovenyautoproductentry.constants.CsvHeaderConstants.*;
 @Component
 public class ProductMapper {
 
+    private final ProductValidator productValidator;
+
+    public ProductMapper(ProductValidator productValidator) {
+        this.productValidator = productValidator;
+    }
 
     public Product csvRecordToProductEntity(CSVRecord record) {
         //TODO field naming(lengthfrom), underscore usage
@@ -34,28 +46,29 @@ public class ProductMapper {
         String widthFromCm = trimFields(record.get(WIDTH));
         String meta_keyword = trimFields(record.get(META_KEYWORD));
         String meta_title = trimFields(record.get(META_TITLE));
-        String meta_description = trimFields(record.get(META_DESCRIPTION));
-        String date_added = trimFields(record.get(DATE_ADDED));
-        String date_modified = trimFields(record.get(DATE_MODIFIED));
-        String attribute_age = trimFields(record.get(ATTRIBUTE_AGE));
-        String attribute_color = trimFields(record.get(ATTRIBUTE_COLOR));
-        String attribute_length = trimFields(record.get(ATTRIBUTE_LENGTH));
-        String attribute_material = trimFields(record.get(ATTRIBUTE_MATERIAL));
-        String attribute_region = trimFields(record.get(ATTRIBUTE_REGION));
-        String attribute_size = trimFields(record.get(ATTRIBUTE_SIZE));
-        String attribute_style = trimFields(record.get(ATTRIBUTE_STYLE));
-        String attribute_weave = trimFields(record.get(ATTRIBUTE_WEAVE));
-        String attribute_width = trimFields(record.get(ATTRIBUTE_WIDTH));
+        String metaDescription = trimFields(record.get(META_DESCRIPTION));
+        String dateAdded = trimFields(record.get(DATE_ADDED));
+        String dateModified = trimFields(record.get(DATE_MODIFIED));
+        String attributeAge = trimFields(record.get(ATTRIBUTE_AGE));
+        String attributeColor = trimFields(record.get(ATTRIBUTE_COLOR));
+        String attributeLength = trimFields(record.get(ATTRIBUTE_LENGTH));
+        String attributeMaterial = trimFields(record.get(ATTRIBUTE_MATERIAL));
+        String attributeRegion = trimFields(record.get(ATTRIBUTE_REGION));
+        String attributeSize = trimFields(record.get(ATTRIBUTE_SIZE));
+        String attributeStyle = trimFields(record.get(ATTRIBUTE_STYLE));
+        String attributeWeave = trimFields(record.get(ATTRIBUTE_WEAVE));
+        String attributeWidth = trimFields(record.get(ATTRIBUTE_WIDTH));
 
         List<String> additionalImages = splitByTripleColon(additionalImage);
-        List<String> colors = splitByComma(attribute_color);
-        List<String> materials = splitByComma(attribute_material);
-        List<String> styles = splitByComma(attribute_style);
+        List<String> colors = splitByComma(attributeColor);
+        List<String> materials = splitByComma(attributeMaterial);
+        List<String> styles = splitByComma(attributeStyle);
         List<String> metaKeywords = splitByComma(meta_keyword);
+
+
 
         ProductType productType = getProductType("PILLOWS:::PILLOWS///16\"x16\"(40x40cm)");
         LeafCategory leafCategory = getLeafCategory("PILLOWS:::PILLOWS///16\"x16\"(40x40cm)");
-
 
         Product product = ProductBuilder.aProduct()
                 .skuNumber(skuNumber)
@@ -69,33 +82,40 @@ public class ProductMapper {
                 .status(Integer.parseInt(status) == 1 ? ProductStatus.ACTIVE : ProductStatus.PASSIVE)
                 .lengthByCm(getPureCm(lengthFromCm))
                 .widthByCm(getPureCm(widthFromCm))
-                .lengthByInches(getPureInch(attribute_length))
-                .widthByInches(getPureInch(attribute_width))
+                .lengthByInches(getPureInch(attributeLength))
+                .widthByInches(getPureInch(attributeWidth))
                 .metaKeyword(new HashSet<>(metaKeywords))
-                .metaDescription(meta_description)
-                .wovenyCreateDate(stringToDate(date_added))
-                .wovenyModifiedDate(stringToDate(date_modified))
-                .age(attribute_age)
+                .metaDescription(metaDescription)
+                .wovenyCreateDate(stringToDate(dateAdded))
+                .wovenyModifiedDate(stringToDate(dateModified))
+                .age(attributeAge)
                 .colors(new HashSet<>(colors))
                 .materials(new HashSet<>(materials))
-                .region(attribute_region)
-                .size(attribute_size)
+                .region(attributeRegion)
+                .size(attributeSize)
                 .styles(new HashSet<>(styles))
-                .weave(Weave.weaveFactory(attribute_weave))
+                .weave(Weave.weaveFactory(attributeWeave))
                 .productType(getProductType(category))
                 .leafCategory(getLeafCategory(category))
                 .build();
 
+        productValidator.validate(product);
         return product;
     }
 
     private List<String> splitByTripleColon(String field) {
         //FIXME if empty check!
+        if (Objects.equals(field, StringUtils.EMPTY)){
+            return new ArrayList<>();
+        }
         return Arrays.asList(field.split(":::"));
     }
 
     private List<String> splitByComma(String field) {
         //FIXME if empty check!
+        if (Objects.equals(field, StringUtils.EMPTY)){
+            return new ArrayList<>();
+        }
         List<String> fields = Arrays.asList(field.split(","));
         return fields.stream().map(this::removeFirstCharacterIfItIsSpace).collect(Collectors.toList());
     }
@@ -125,7 +145,7 @@ public class ProductMapper {
         return formatter.parse(field);
         // todo
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("Parsing error - string to date",e);
         }
     }
 

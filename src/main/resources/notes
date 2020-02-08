@@ -1,1 +1,42 @@
-google-spread-sheets içn link -> https://www.baeldung.com/google-sheets-java-client
+SKU         ID
+----      ------
+0000        1
+123123123   616
+50353       2728
+50417       2782
+50637       2843
+
+Bunların categorileri, product_type, age,  başta olmak üzere birçok alanı null
+bu statusları 0 ve 1 olan var stock-status ise 2-3 days ve Out-OfStock
+
+
+
+* age' i boş olanlar var bunlar kontrol edilmeli
+* length_by_cm and length_by_inches 0 ve boş olanlar var aynı şekilde width için de bunların çoğu birbirinin aynısı
+* main image temiz
+* price temiz
+* price için 3 sıkıntılı ürün var 2si yukarıdakiler 1 i farklı ama out of stock hepsi
+* region boş olanlar var
+* size boş olanlar var
+* sku number temiz
+* weave boş olanlar var
+
+
+* meta_description için generator yazılacak
+* enumlar düzeltilecek
+
+
+*gerçekten satılacak olan ürünler için hem db sorgusu hem woveny filtresinden sayıları eşitleyelim
+
+Distressed Rug, Oushak Rug, Large Rug, Blue Beige Rug, Vintage Turkish Rug, Oushak Carpet, 9x12 Oushak Rug, Vintage Carpet, Area Rug 9x12, Turkish rug, Vintage Blue Rug, Turkish Vintage Carpet, Blue Rug, 9x12 Blue Rug, Mid-Century Modern Rug, Oushak Rug,
+Vintage handknotted rug from Oushak region of Turkey. Approximately 50-60 years old. In very good condition.
+
+SKU    quantity status  stock-status
+----   -----    ----     --------
+0002   1        1       2-3 Days
+0004   1        1       2-3 Days
+0014   1        1       2-3 Days
+0015   1        1       2-3 Days
+0017   1        1       2-3 Days44
+0018   1        1       2-3 Days
+0020   1        1       2-3 Days

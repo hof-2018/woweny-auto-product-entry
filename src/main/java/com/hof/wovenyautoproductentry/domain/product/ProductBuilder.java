@@ -201,7 +201,7 @@ public final class ProductBuilder {
         product.setStyles(styles);
         product.setWeave(weave);
         product.setProductType(productType);
-        product.setLeafCategory(leafCategory);
+        product.setLeafCategory(Objects.nonNull(leafCategory)?leafCategory.getValue():"");
         return product;
     }
 }

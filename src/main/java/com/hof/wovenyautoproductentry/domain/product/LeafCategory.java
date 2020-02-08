@@ -37,6 +37,8 @@ public enum LeafCategory {
     public static LeafCategory findLeafCategoryValue(String value){
         return List.of(LeafCategory.values()).stream()
                 .filter(leafCategory -> leafCategory.getValue().equalsIgnoreCase(value))
-                .findAny().orElse(null);        // todo null?
+                .findAny()
+                .orElse(null); // todo null
+                //.orElseThrow(()-> new IllegalArgumentException("Leaf Category is not valid"));
     }
 }
