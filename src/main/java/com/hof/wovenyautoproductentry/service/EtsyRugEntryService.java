@@ -36,8 +36,8 @@ public class EtsyRugEntryService {
 
         WebDriver driver = SeleniumUtils.openChrome(ETSY_DASHBOARD_PAGE);
         //Login
-        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"join_neu_email_field\"]", username, "");
-        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"join_neu_password_field\"]", password, "");
+        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"join_neu_email_field\"]", username);
+        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"join_neu_password_field\"]", password);
         SeleniumUtils.clickElement(driver, "//*[@id=\"join-neu-form\"]/div[1]/div/div[5]/div/button");
         //WebDriverWait wait = new WebDriverWait(driver, 20);
         //wait.until(ExpectedConditions.elementToBeClickable(findElement(driver,"//*[@id=\"shop-mgr-button\"]")));
@@ -57,14 +57,15 @@ public class EtsyRugEntryService {
         ClassLoader classLoader = getClass().getClassLoader();
         URL url = classLoader.getResource("51547.JPG");
 
-        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"listing-edit-image-upload\"]", url.getPath(), "");
-        //SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"listing-edit-image-upload\"]", product.getMainImageUrl(), "");
+        //SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"listing-edit-image-upload\"]", url.getPath());
+        //SeleniumUtils.clickElement(driver,"//*[@id=\"listing-edit-image-upload\"]");
+        //SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"listing-edit-image-upload\"]", product.getMainImageUrl());
         //TODO Read photos from remote
         //sendKeysToElement(driver,"//*[@id=\"listing-edit-image-upload\"]","https://cdn03.ciceksepeti.com/cicek/at1677-1/XL/cicek-sepeti-100-kirmizi-gul-cicek-demeti-at1677-1-8d6463aee156183-4cb02247.jpg");
 
         //////////Title
         String title = product.getName().replace("`", ".").replace("\"", "").concat(" ft");
-        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"title\"]", title, "");
+        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"title\"]", title);
         //////////Who Made
         SeleniumUtils.selectFromElement(driver, "//*[@id=\"who_made\"]", "Another company or person");
         //////////Is Supply
@@ -72,7 +73,7 @@ public class EtsyRugEntryService {
         //////////When Made
         SeleniumUtils.selectFromElement(driver, "//*[@id=\"when_made\"]", product.getAge().equals("Vintage")?"1960s":"1940s");
         //////////Category
-        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"taxonomy-search\"]", "Rugs", "E");
+        SeleniumUtils.sendKeysToElementWithSubmitEnter(driver, "//*[@id=\"taxonomy-search\"]", "Rugs");
         Thread.sleep(1000);
         ///////Main Color
         ArrayList<String> colors = new ArrayList<>(product.getColors());
@@ -91,32 +92,43 @@ public class EtsyRugEntryService {
             String length = product.getLengthByInches().replace("`", ".").replace("\"", "").replace(" ", "").trim();
             String width = product.getWidthByInches().replace("`", ".").replace("\"", "").replace(" ", "").trim();
 
-            SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"attribute-55-input\"]", length, "");
+            SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"attribute-55-input\"]", length);
             SeleniumUtils.selectFromElement(driver, "//*[@id=\"attribute-55-unit\"]", "Feet");
             //////////Width
-            SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"attribute-68-input\"]", width, "");
+            SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"attribute-68-input\"]", width);
             SeleniumUtils.selectFromElement(driver, "//*[@id=\"attribute-68-unit\"]", "Feet");
         }
 
         //////////Description
         String description = generateDescription(product);
-        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"description\"]", description, "");
+        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"description\"]", description);
         //////////Section
         SeleniumUtils.selectFromElement(driver, "//*[@id=\"sections\"]", EtsyConstants.leafCategoryMap.get(product.getLeafCategory()));
         //////////Tags
         String tags = getTags(product);
-        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"tags\"]", tags, "");
+        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"tags\"]", tags);
         SeleniumUtils.clickElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[4]/div[24]/div/div/div[2]/div[1]/div[1]/div/div[2]/button");
         //////////Materials
         String materials = getMaterials(product.getMaterials());
-        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"materials\"]", materials, "");
+        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"materials\"]", materials);
         SeleniumUtils.clickElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[4]/div[25]/div/div/div[2]/div[1]/div[1]/div/div[2]/button");
         //////////Price
-        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"price_retail-input\"]", product.getPrice().toString(), "");
+        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"price_retail-input\"]", product.getPrice().toString());
         //////////SKU Number
-        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"SKU-input\"]", product.getSkuNumber(), "");
+        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"SKU-input\"]", product.getSkuNumber());
         //////////Shipping
-        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[1]/div/div[1]/div/div[1]/label/input", "", "S");
+        //Old SeleniumUtils.sendKeysToElementWithSubmitSpace(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[1]/div/div[1]/div/div[1]/label/input");
+        SeleniumUtils.sendKeysToElementWithSubmitSpace(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/label/input");
+        SeleniumUtils.selectFromElement(driver,"//*[@id=\"processing-time-selector\"]","1-3 business days");
+        //Shipment for Turkey
+        SeleniumUtils.selectFromElement(driver,"//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[3]/div/div/div/div[2]/select","Other");
+        SeleniumUtils.selectFromElement(driver,"//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[4]/div[2]/div/div/div[1]/label/select","2");
+        SeleniumUtils.selectFromElement(driver,"//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[4]/div[2]/div/div/div[3]/label/select","5");
+        //Shipment for Other
+        SeleniumUtils.selectFromElement(driver,"//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[2]/div/div[1]/div/div[1]/div[3]/div/div/div/div[2]/select","Other");
+        SeleniumUtils.selectFromElement(driver,"//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[2]/div/div[1]/div/div[1]/div[4]/div[2]/div/div/div[1]/label/select","2");
+        SeleniumUtils.selectFromElement(driver,"//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[2]/div/div[1]/div/div[1]/div[4]/div[2]/div/div/div[3]/label/select","5");
+
         //////////First Publish Button
         SeleniumUtils.clickElement(driver, "//*[@id=\"page-region\"]/div/div/div[3]/div/div[1]/div/div/div[2]/button[3]");
         Thread.sleep(10000);
