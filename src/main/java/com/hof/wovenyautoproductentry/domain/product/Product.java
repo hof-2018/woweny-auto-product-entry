@@ -17,7 +17,7 @@ public class Product {
     private String name;
     private String categoryPath;
     private String mainImageUrl;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> additionalImagePaths = new ArrayList<>();
     private Integer price;
     private Integer quantity;
@@ -28,20 +28,21 @@ public class Product {
     private Integer widthByCm;
     private String lengthByInches;
     private String widthByInches;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> metaKeyword = new HashSet<>();
     private String metaDescription;
     private Date wovenyCreateDate;
     private Date wovenyModifiedDate;
     private String age;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> colors = new HashSet<>();
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> materials = new HashSet<>();
     private String region;
     private String size;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> styles = new HashSet<>();
+
     @Enumerated(EnumType.STRING)
     private Weave weave;
 
@@ -50,8 +51,8 @@ public class Product {
 
     private String leafCategory;
 
-    private Boolean isUploadedChairish;
-
+    private boolean isUploadedChairish;
+    private boolean isUploadedEtsy;
 
     public Product() {
     }
@@ -278,5 +279,21 @@ public class Product {
 
     public void setUploadedChairish(Boolean uploadedChairish) {
         isUploadedChairish = uploadedChairish;
+    }
+
+    public boolean isUploadedChairish() {
+        return isUploadedChairish;
+    }
+
+    public void setUploadedChairish(boolean uploadedChairish) {
+        isUploadedChairish = uploadedChairish;
+    }
+
+    public boolean isUploadedEtsy() {
+        return isUploadedEtsy;
+    }
+
+    public void setUploadedEtsy(boolean uploadedEtsy) {
+        isUploadedEtsy = uploadedEtsy;
     }
 }

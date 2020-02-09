@@ -11,6 +11,7 @@ import java.util.Set;
 import static com.hof.wovenyautoproductentry.constants.RugConstants.CARPET;
 import static com.hof.wovenyautoproductentry.constants.RugConstants.DECORATIVE;
 import static com.hof.wovenyautoproductentry.constants.RugConstants.HANDMADE;
+import static com.hof.wovenyautoproductentry.constants.RugConstants.KILIM;
 import static com.hof.wovenyautoproductentry.constants.RugConstants.RUG;
 
 @Component
@@ -54,8 +55,12 @@ public class ProductValidator {
         if (product.getWidthByCm() != 0 && product.getLengthByCm() != 0) {
             metadataKeywords.add(product.getWidthByCm() + " x " + product.getLengthByCm() + StringUtils.SPACE + CARPET);
         }
+        if (Objects.nonNull(product.getLeafCategory()) &&  !product.getLeafCategory().equals(StringUtils.EMPTY)){
+            metadataKeywords.add(product.getLeafCategory());
+        }
 
         metadataKeywords.add(HANDMADE + StringUtils.SPACE + DECORATIVE + StringUtils.SPACE + RUG);
+        metadataKeywords.add(DECORATIVE + StringUtils.SPACE + KILIM);
 
         product.setMetaKeyword(metadataKeywords);
     }
