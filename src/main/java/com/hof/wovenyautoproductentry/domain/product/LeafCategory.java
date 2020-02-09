@@ -5,24 +5,24 @@ import java.util.List;
 public enum LeafCategory {
 
     ColorfulKilims("Colorful Kilims"),
-    VintageNaturalModern("Vintage Natural | Modern"),
+    VintageNaturalModern("Vintage Modern Kilims"),
     Embroidered("Embroidered Kilims"),
     RagRugs("Rag Rugs"),
     HempKilims("Hemp Kilims"),
 
-    KhotanCaucasian("Khotan | Caucasian"),
-    TurkishAnatolian ("Turkish Anatolian"),
+    KhotanCaucasian("Khotan | Caucasian Rugs"),
+    TurkishAnatolian ("Turkish Anatolian Rugs"),
     PersianRugs("Persian Rugs"),
-    TurkishOushak("Turkish Oushak"),
+    TurkishOushak("Turkish Oushak Rugs"),
 
-    SixteenXSixteen("16\"X16\"(40X40CM)"),
-    SixteenXTwentyFour("16\"X24\"(40X60CM)"),
-    TwentyXTwenty("20\"X20\"(50X50CM)"),
-    FourTeenXTwenty("14\"X20\"(35X50CM)"),
-    TwentyXTwentyEight("20\"X28\"(50X70CM)"),
-    TwelveXTwentyFour("12\"X24\"(30X60CM)"),
-    EighteenXEighteen("18\"X18\"(45X45CM)"),
-    TwelveXTwenty("12\"X20\"(30X50CM)");
+    SixteenXSixteen("16\"X16\"(40X40CM) Pillows"),
+    SixteenXTwentyFour("16\"X24\"(40X60CM) Pillows"),
+    TwentyXTwenty("20\"X20\"(50X50CM) Pillows"),
+    FourTeenXTwenty("14\"X20\"(35X50CM) Pillows"),
+    TwentyXTwentyEight("20\"X28\"(50X70CM) Pillows"),
+    TwelveXTwentyFour("12\"X24\"(30X60CM) Pillows"),
+    EighteenXEighteen("18\"X18\"(45X45CM) Pillows"),
+    TwelveXTwenty("12\"X20\"(30X50CM) Pillows");
 
     private String value;
 

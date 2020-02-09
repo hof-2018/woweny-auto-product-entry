@@ -65,7 +65,8 @@ public class ProductMapper {
         List<String> styles = splitByComma(attributeStyle);
         List<String> metaKeywords = splitByComma(meta_keyword);
 
-
+        //RUGS///HANDKNOTTED RUGS:::RUGS///HANDKNOTTED RUGS///Turkish Anatolian Rugs:::RUGS
+        //RUGS///HANDWOVEN KILIM RUGS:::RUGS///HANDWOVEN KILIM RUGS///Vintage Modern Kilims:::RUGS
 
         ProductType productType = getProductType("PILLOWS:::PILLOWS///16\"x16\"(40x40cm)");
         LeafCategory leafCategory = getLeafCategory("PILLOWS:::PILLOWS///16\"x16\"(40x40cm)");

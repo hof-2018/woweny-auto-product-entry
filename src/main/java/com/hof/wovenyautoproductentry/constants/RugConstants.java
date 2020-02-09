@@ -5,4 +5,6 @@ public class RugConstants {
     public static final String CARPET = "Carpet";
     public static final String DECORATIVE = "Decorative";
     public static final String HANDMADE = "Handmade";
+    public static final String KILIM = "Kilim";
+
 }
