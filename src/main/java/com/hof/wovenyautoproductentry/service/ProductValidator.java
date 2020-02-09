@@ -19,7 +19,6 @@ public class ProductValidator {
 
     public void validate(Product product) {
         validateMetaDataKeyword(product);
-        System.out.println("");
     }
 
     private void validateMetaDataKeyword(Product product) {

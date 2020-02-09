@@ -1,5 +1,8 @@
 package com.hof.wovenyautoproductentry.service;
 
+import com.hof.wovenyautoproductentry.constants.RugConstants;
+import com.hof.wovenyautoproductentry.domain.product.Product;
+import com.hof.wovenyautoproductentry.repository.ProductRepository;
 import com.hof.wovenyautoproductentry.util.SeleniumUtils;
 import org.openqa.selenium.WebDriver;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,12 @@ public class ChairishRugEntryService {
     private static final String HASAN_LOCAL_PATH = "C:\\Users\\hasanemre.ari\\Desktop\\";
     private static final String HASAN_NEW_FOLDER = "3301-3400\\";
 
+    private final ProductRepository productRepository;
+
+    public ChairishRugEntryService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
     public void execute() throws InterruptedException {
 
         WebDriver driver = SeleniumUtils.openChrome(CHAIRISH_CREATION_PAGE);
@@ -35,24 +44,24 @@ public class ChairishRugEntryService {
 
         //Thread.sleep(2000);
 
+        List<Product> products = productRepository.findAllBySkuNumberGreaterThanAndSkuNumberIsLessThan("3300", "3401");
+
+        for (Product product:products) {
+
         //////////Title
-        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"id_title\"]", "Title Deneme");
+        SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"id_title\"]", product.getName());
         //////////Category
-        SeleniumUtils.sendKeysToElementWithSubmitDownEnter(driver, "//*[@id=\"id_categories\"]", "rug");
+        SeleniumUtils.sendKeysToElementWithSubmitDownEnter(driver, "//*[@id=\"id_categories\"]", RugConstants.RUG);
         Thread.sleep(1000);
         //////////Photo
-        ClassLoader classLoader = getClass().getClassLoader();
-        URL url = classLoader.getResource("51547.JPG");
         //SeleniumUtils.sendKeysToElementWithSubmitEnter(driver,"//*[@id=\"js-basic-fields\"]/div[2]/div[2]/fieldset/div/div/div[2]/div[1]/label","");
-        List<String> imagesPaths = generateImagePaths("3301", 3);
+        List<String> imagesPaths = generateImagePaths(product.getSkuNumber(), product.getAdditionalImagePaths().size());
 
         IntStream.range(0, imagesPaths.size())
                 .forEach(i -> {
                     SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"js-basic-fields\"]/div[2]/div[2]/fieldset/div/div/div[2]/div[" + (i + 1) + "]/label/input", imagesPaths.get(i));
                 });
         //SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"js-basic-fields\"]/div[2]/div[2]/fieldset/div/div/div[2]/div[1]/label", url.getPath());
-        //TODO resim için son divde 1'den 12'ye kadar loop edip gelen resimlerin yüklenmesi
-        //"//*[@id=\"js-basic-fields\"]/div[3]/div[2]/fieldset/div/div/div[2]/div[12]/label/input"
         //TODO OR read photos from remote
         //SeleniumUtils.sendKeysToElement(driver,"//*[@id=\"js-basic-fields\"]/div[2]/div[2]/fieldset/div/div/div[2]/div[1]/label/input",//*[@id=\\\"js-basic-fields\\\"]/div[3]/div[2]/fieldset/div/div/div[2]/div[1]/label/input",
         //"https://www.woveny.com/image/catalog/0521.jpg");
@@ -115,7 +124,7 @@ public class ChairishRugEntryService {
         Thread.sleep(5000);
         //////////Submit Button
         //SeleniumUtils.clickElement(driver, "//*[@id=\"content\"]/form/div[7]/fieldset/div/div[1]/button[2]");
-
+        }
         System.out.println("Program bitti.");
     }
 

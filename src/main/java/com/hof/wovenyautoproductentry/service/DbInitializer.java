@@ -24,7 +24,7 @@ public class DbInitializer {
         this.productRepository = productRepository;
     }
 
-    @PostConstruct
+    //@PostConstruct
     void initialize(){
         String filePath = ClassLoader.getSystemResource(CSV_FILE_PATH).getPath();
         try {
