@@ -54,6 +54,8 @@ public class Product {
     private boolean isUploadedChairish;
     private boolean isUploadedEtsy;
 
+    private String description;
+
     public Product() {
     }
 
@@ -295,5 +297,13 @@ public class Product {
 
     public void setUploadedEtsy(boolean uploadedEtsy) {
         isUploadedEtsy = uploadedEtsy;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
