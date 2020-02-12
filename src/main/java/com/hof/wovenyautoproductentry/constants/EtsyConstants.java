@@ -1,7 +1,5 @@
 package com.hof.wovenyautoproductentry.constants;
 
-import com.hof.wovenyautoproductentry.domain.product.LeafCategory;
-
 import java.util.HashMap;
 import java.util.Map;
 
