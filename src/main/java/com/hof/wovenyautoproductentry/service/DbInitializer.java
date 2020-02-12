@@ -49,12 +49,13 @@ public class DbInitializer {
         try {
             Iterable<CSVRecord> records = csvReader.read(filePath, CSV_SPLIT_BY);
             records.forEach(record -> {
-                logger.info("Item: {}", record.get("model"));
                 Optional<Product> productOptional = productRepository.findBySkuNumber(record.get("model"));
                 if (productOptional.isPresent()) {
                     Product product = productOptional.get();
                     product.setDescription(record.get("description"));
                     productRepository.save(product);
+                } else {
+                    logger.info("Item: {} not found in db", record.get("model"));
                 }
             });
         } catch (IOException e) {
