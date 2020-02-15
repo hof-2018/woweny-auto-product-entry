@@ -69,14 +69,14 @@ public class EtsyRugEntryService {
             images.add(product.getMainImageUrl());
             images.addAll(product.getAdditionalImagePaths());
             images.forEach(this::downloadImage);
-            Thread.sleep(500 * images.size());
+            Thread.sleep(400 * images.size());
             ClassLoader classLoader = getClass().getClassLoader();
 
             images.forEach(imagePath -> {
                 String fileNameOfImage = getFileNameOfImage(imagePath);
                 SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"listing-edit-image-upload\"]", okan_local_image_path + fileNameOfImage);
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(900);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -98,7 +98,7 @@ public class EtsyRugEntryService {
             SeleniumUtils.selectFromElement(driver, "//*[@id=\"when_made\"]", product.getAge().equals("Vintage") || product.getAge().equals("") ? "1960s" : "1940s");
             //////////Category
             SeleniumUtils.sendKeysToElementWithSubmitEnter(driver, "//*[@id=\"taxonomy-search\"]", "Rugs");
-            Thread.sleep(1000);
+            Thread.sleep(1500);
             ///////Main Color
             ArrayList<String> colors = new ArrayList<>(product.getColors());
             if (!colors.isEmpty()){

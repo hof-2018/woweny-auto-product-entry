@@ -26,4 +26,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> getProductsForEtsyWithLimit(Pageable pageable);
 
     List<Product> findByProductTypeAndQuantityAndStatusAndStockStatusNotAndIsUploadedEtsy(Pageable pageable, ProductType productType, Integer quantity, ProductStatus status, String stockStatus, boolean uploadedEtsy);
+
+    List<Product> findByIdBefore(Long id);
+    List<Product> findByIdAfterAndIdBefore(Long after, Long before);
+    List<Product> findByIdAfterAndProductType(Long id, ProductType productType);
+
 }
