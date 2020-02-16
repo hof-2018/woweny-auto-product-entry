@@ -32,7 +32,7 @@ public class SchedulerController {
         System.out.println(
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Etsy rug entry job is finished.");
     }
-    @Scheduled(fixedRate = 1000 * 100)
+    //@Scheduled(fixedRate = 1000 * 1000000)
     public void scheduleChairishRugEntry() throws InterruptedException {
         System.out.println(
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Chairish rug entry job is started.");
@@ -41,7 +41,7 @@ public class SchedulerController {
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Chairish rug entry job is finished.");
     }
 
-    @Scheduled(fixedRate = 1000 * 100000)
+    //@Scheduled(fixedRate = 1000 * 100000)
     public void scheduleEtsyRugEntry2() throws InterruptedException {
         System.out.println(
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Etsy rug entry job is started.");

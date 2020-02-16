@@ -71,7 +71,7 @@ public class SeleniumUtils {
     public static void sendKeysToElementWithSubmitDownEnter(WebDriver driver, String xpath, String keys) throws InterruptedException {
         WebElement element = findElementByXpath(driver, xpath);
         element.sendKeys(keys);
-        Thread.sleep(2000);
+        Thread.sleep(3500);
         element.sendKeys(Keys.ARROW_DOWN);
         Thread.sleep(1000);
         element.sendKeys(Keys.ENTER);
