@@ -273,14 +273,6 @@ public class Product {
         this.leafCategory = leafCategory;
     }
 
-    public Boolean getUploadedChairish() {
-        return isUploadedChairish;
-    }
-
-    public void setUploadedChairish(Boolean uploadedChairish) {
-        isUploadedChairish = uploadedChairish;
-    }
-
     public boolean isUploadedChairish() {
         return isUploadedChairish;
     }

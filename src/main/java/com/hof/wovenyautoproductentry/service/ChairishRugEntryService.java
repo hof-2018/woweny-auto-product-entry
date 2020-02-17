@@ -50,11 +50,17 @@ public class ChairishRugEntryService {
         List<Product> products = productRepository.findAllBySkuNumberGreaterThanAndSkuNumberIsLessThanAndIsUploadedChairish("3300", "3350", false);
 
         for (Product product : products) {
+
+            int index = products.indexOf(product);
+            if (index != 0){
+                Product previousProduct = products.get(index - 1);
+                previousProduct.setUploadedChairish(true);
+                productRepository.save(previousProduct);
+            }
             //////////Open create page
             SeleniumUtils.openUrl(driver, CHAIRISH_CREATION_PAGE);
 
             //////////Title
-            StringBuilder title = new StringBuilder();
             List<String> fields = Arrays.asList(product.getName().split("-"));
             SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"id_title\"]", fields.get(0));//Todo daha doğru parçalama
             //////////Category
@@ -166,8 +172,7 @@ public class ChairishRugEntryService {
             //Todo Uncomment when go live
             //////////Submit Button
             SeleniumUtils.clickElement(driver, "//*[@id=\"content\"]/form/div[7]/fieldset/div/div[1]/button[2]");
-            product.setUploadedChairish(true);
-            productRepository.save(product);
+
             Thread.sleep(7000);
         }
         System.out.println("Program bitti.");

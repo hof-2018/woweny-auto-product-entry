@@ -33,7 +33,7 @@ public class SchedulerController {
                 "Cron -" + System.currentTimeMillis() / 1000);
     }
 
-   // @Scheduled(fixedRate = 1000 * 100)
+   // @Scheduled(fixedDelay = 1000 * 3)
     public void scheduleChairishRugEntry() throws InterruptedException {
         System.out.println(
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Chairish rug entry job is started.");
