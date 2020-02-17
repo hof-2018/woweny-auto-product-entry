@@ -27,9 +27,6 @@ bu statusları 0 ve 1 olan var stock-status ise 2-3 days ve Out-OfStock
 * weave boş olanlar var
 
 
-* meta_description için generator yazılacak
-* enumlar düzeltilecek
-
-
 *gerçekten satılacak olan ürünler için hem db sorgusu hem woveny filtresinden sayıları eşitleyelim
 
+3312 etsye girilmedi

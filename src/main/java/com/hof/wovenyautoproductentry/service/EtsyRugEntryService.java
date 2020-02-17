@@ -58,7 +58,7 @@ public class EtsyRugEntryService {
         //Product product = productRepository.findBySkuNumber("3301");
         //List<Product> products = productRepository.getProductsForEtsyWithLimit(PageRequest.of(0,10));
 
-        List<Product> products = productRepository.findByProductTypeAndQuantityAndStatusAndStockStatusNotAndIsUploadedEtsy(PageRequest.of(0, 500), ProductType.RUG, 1, ProductStatus.ACTIVE, "Out Of Stock", false);
+        List<Product> products = productRepository.findByProductTypeAndQuantityAndStatusAndStockStatusNotAndIsUploadedEtsy(PageRequest.of(0, 100), ProductType.RUG, 1, ProductStatus.ACTIVE, "Out Of Stock", false);
 
         for (Product product : products) {
             Thread.sleep(3000);
@@ -76,7 +76,7 @@ public class EtsyRugEntryService {
                 String fileNameOfImage = getFileNameOfImage(imagePath);
                 SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"listing-edit-image-upload\"]", okan_local_image_path + fileNameOfImage);
                 try {
-                    Thread.sleep(900);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -155,7 +155,7 @@ public class EtsyRugEntryService {
 
             //////////First Publish Button
             SeleniumUtils.clickElement(driver, "//*[@id=\"page-region\"]/div/div/div[3]/div/div[1]/div/div/div[2]/button[3]");
-            Thread.sleep(10000);
+            Thread.sleep(8000);
             SeleniumUtils.clickElement(driver, "//*[@id=\"page-region\"]/div/div/div[3]/div/div[1]/div/div/div[2]/button[3]");
             //Todo Uncomment when go live
             //////////Second Publish Button
@@ -169,10 +169,9 @@ public class EtsyRugEntryService {
                 File fileToDelete = FileUtils.getFile(okan_local_image_path + fileNameOfImage);
                 boolean success = FileUtils.deleteQuietly(fileToDelete);
             });
-            System.out.println("Program bitti.");
-
+            System.out.println("product id: " + product.getId() + " skuNumber: " + product.getSkuNumber()+ " is done");
         }
-
+        driver.close();
     }
 
     private String getTitle(Product product) {
@@ -180,7 +179,7 @@ public class EtsyRugEntryService {
         if (!name.contains("`")) {
             name = name + " " + product.getWidthByInches().replace(" ", "") + " x " + product.getLengthByInches().replace(" ", "") + " ft";
         }
-        return name.replace("`", ".").replace("\"", "");
+        return name.replace("`", ".").replace("\"", "").replace("&","");
     }
 
     private void downloadImage(String source) {

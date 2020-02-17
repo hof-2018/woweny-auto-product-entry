@@ -2,10 +2,19 @@ package com.hof.wovenyautoproductentry.scheduler;
 
 import com.hof.wovenyautoproductentry.service.ChairishRugEntryService;
 import com.hof.wovenyautoproductentry.service.EtsyRugEntryService;
+import org.apache.commons.io.FileUtils;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
+import static org.postgresql.PGProperty.CONNECT_TIMEOUT;
 
 @Component
 public class SchedulerController {
@@ -25,14 +34,6 @@ public class SchedulerController {
     }
 
    // @Scheduled(fixedRate = 1000 * 100)
-    public void scheduleEtsyRugEntry() throws InterruptedException {
-        System.out.println(
-                "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Etsy rug entry job is started.");
-        this.etsyRugEntryService.execute();
-        System.out.println(
-                "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Etsy rug entry job is finished.");
-    }
-    @Scheduled(fixedRate = 1000 * 100)
     public void scheduleChairishRugEntry() throws InterruptedException {
         System.out.println(
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Chairish rug entry job is started.");
@@ -41,14 +42,13 @@ public class SchedulerController {
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Chairish rug entry job is finished.");
     }
 
-    @Scheduled(fixedRate = 1000 * 100000)
-    public void scheduleEtsyRugEntry2() throws InterruptedException {
+    @Scheduled(fixedDelay = 1000 * 2)
+    public void scheduleEtsyRugEntry() throws InterruptedException {
         System.out.println(
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Etsy rug entry job is started.");
         this.etsyRugEntryService.execute();
         System.out.println(
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Etsy rug entry job is finished.");
     }
-
 
 }
