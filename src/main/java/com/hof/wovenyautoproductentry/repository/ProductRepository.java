@@ -31,4 +31,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByIdAfterAndIdBefore(Long after, Long before);
     List<Product> findByIdAfterAndProductType(Long id, ProductType productType);
 
+    List<Product> findAllBySkuNumberGreaterThanAndSkuNumberIsLessThanAndIsUploadedChairish(String firstSkuNUmber, String lastSkuNumber, Boolean isUploaded);
 }
