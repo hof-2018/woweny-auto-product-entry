@@ -35,7 +35,7 @@ public class DbInitializer {
             Iterable<CSVRecord> records = csvReader.read(filePath, CSV_SPLIT_BY);
             records.forEach(record -> {
                 Product product = productMapper.csvRecordToProductEntity(record);
-                productRepository.save(product);
+                //productRepository.save(product);
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,7 +48,7 @@ public class DbInitializer {
         products.forEach(product -> {
             productValidator.generateMetadataKeyword(product);
             //System.out.println(product.getSkuNumber() + " --> " + product.getMetaKeyword());
-            productRepository.save(product);
+            //productRepository.save(product);
         });
     }
 
