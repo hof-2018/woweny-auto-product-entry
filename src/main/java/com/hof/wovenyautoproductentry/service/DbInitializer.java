@@ -44,11 +44,11 @@ public class DbInitializer {
 
     //@PostConstruct
     void generateMetaKeyword() {
-        List<Product> products = productRepository.findByIdBefore(1531L);
+        List<Product> products = productRepository.findByProductType(ProductType.PILLOW);
         products.forEach(product -> {
             productValidator.generateMetadataKeyword(product);
-            //System.out.println(product.getSkuNumber() + " --> " + product.getMetaKeyword());
-            //productRepository.save(product);
+            System.out.println(product.getSkuNumber() + " --> " + product.getMetaKeyword());
+            productRepository.save(product);
         });
     }
 

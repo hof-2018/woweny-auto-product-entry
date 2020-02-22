@@ -30,3 +30,7 @@ bu statusları 0 ve 1 olan var stock-status ise 2-3 days ve Out-OfStock
 *gerçekten satılacak olan ürünler için hem db sorgusu hem woveny filtresinden sayıları eşitleyelim
 
 3312 etsye girilmedi
+3392 materialsı yanlış
+
+halılar 3400den sonrası etsye girilecek
+pillowlar da 52266 dan sonrası
