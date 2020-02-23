@@ -28,7 +28,8 @@ public class EtsyRugEntryService {
     private static final String username = "wovenyhome@gmail.com";
     private static final String password =  "boyabat57";
     private static final String image_url_pref =  "https://www.woveny.com/image/cache/";
-    private static final String okan_local_image_path = "/Users/okan.yildirim/Documents/my-projects/woveny/images/";
+    //private static final String okan_local_image_path = "/Users/okan.yildirim/Documents/my-projects/woveny/images/";
+    private static final String okan_local_image_path = "/home/okan/Documents/my-projects/woveny/images/";
 
     //private static final String username = "hetyemez@yahoo.com";
     //private static final String password =  "etyemez57";

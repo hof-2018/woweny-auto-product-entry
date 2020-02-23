@@ -13,7 +13,7 @@ import java.util.List;
 
 @Component
 public class DbInitializer {
-    private static final String CSV_FILE_PATH = "export_2020-02-09.csv";
+    private static final String CSV_FILE_PATH = "export_2020-02-23.csv";
     private static final Character CSV_SPLIT_BY = ';';
 
     private final CSVReader csvReader;
@@ -35,6 +35,7 @@ public class DbInitializer {
             Iterable<CSVRecord> records = csvReader.read(filePath, CSV_SPLIT_BY);
             records.forEach(record -> {
                 Product product = productMapper.csvRecordToProductEntity(record);
+                System.out.println(product);
                 //productRepository.save(product);
             });
         } catch (IOException e) {
@@ -48,7 +49,7 @@ public class DbInitializer {
         products.forEach(product -> {
             productValidator.generateMetadataKeyword(product);
             System.out.println(product.getSkuNumber() + " --> " + product.getMetaKeyword());
-            productRepository.save(product);
+            //productRepository.save(product);
         });
     }
 

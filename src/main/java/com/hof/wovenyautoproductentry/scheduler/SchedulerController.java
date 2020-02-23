@@ -36,7 +36,7 @@ public class SchedulerController {
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Chairish rug entry job is finished.");
     }
 
-    //@Scheduled(fixedDelay = 1000 * 2)
+    @Scheduled(fixedDelay = 1000 * 2)
     public void scheduleEtsyRugEntry() throws InterruptedException {
         System.out.println(
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Etsy rug entry job is started.");

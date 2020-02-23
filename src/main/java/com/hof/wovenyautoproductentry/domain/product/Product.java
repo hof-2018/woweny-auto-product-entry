@@ -288,4 +288,39 @@ public class Product {
     public void setUploadedEtsy(boolean uploadedEtsy) {
         isUploadedEtsy = uploadedEtsy;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", skuNumber='" + skuNumber + '\'' +
+                ", name='" + name + '\'' +
+                ", categoryPath='" + categoryPath + '\'' +
+                ", mainImageUrl='" + mainImageUrl + '\'' +
+                ", additionalImagePaths=" + additionalImagePaths +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", stockStatus='" + stockStatus + '\'' +
+                ", status=" + status +
+                ", lengthByCm=" + lengthByCm +
+                ", widthByCm=" + widthByCm +
+                ", lengthByInches='" + lengthByInches + '\'' +
+                ", widthByInches='" + widthByInches + '\'' +
+                ", metaKeyword=" + metaKeyword +
+                ", metaDescription='" + metaDescription + '\'' +
+                ", wovenyCreateDate=" + wovenyCreateDate +
+                ", wovenyModifiedDate=" + wovenyModifiedDate +
+                ", age='" + age + '\'' +
+                ", colors=" + colors +
+                ", materials=" + materials +
+                ", region='" + region + '\'' +
+                ", size='" + size + '\'' +
+                ", styles=" + styles +
+                ", weave=" + weave +
+                ", productType=" + productType +
+                ", leafCategory='" + leafCategory + '\'' +
+                ", isUploadedChairish=" + isUploadedChairish +
+                ", isUploadedEtsy=" + isUploadedEtsy +
+                '}';
+    }
 }

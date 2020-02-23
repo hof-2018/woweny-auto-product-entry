@@ -26,20 +26,22 @@ public class ProductValidator {
 
 
     public void validate(Product product) {
-        validateMetaDataKeyword(product);
+        generateMetadataKeyword(product);
     }
 
-    private void validateMetaDataKeyword(Product product) {
+    /*private void validateMetaDataKeyword(Product product) {
         if (product.getMetaKeyword().isEmpty()) {
             generateMetadataKeyword(product);
         }
-    }
+    }*/
 
     public void generateMetadataKeyword(Product product) {
-        if (product.getProductType().equals(ProductType.RUG)) {
-            generateMetaDataKeywordForRug(product);
-        } else {
-            generateMetaDataKeywordForPillow(product);
+        if (product.getProductType() != null) {
+            if (product.getProductType().equals(ProductType.RUG)) {
+                generateMetaDataKeywordForRug(product);
+            } else {
+                generateMetaDataKeywordForPillow(product);
+            }
         }
     }
 
@@ -127,7 +129,7 @@ public class ProductValidator {
         if (product.getWidthByCm() != 0 && product.getLengthByCm() != 0) {
             metadataKeywords.add(product.getWidthByCm() + "x" + product.getLengthByCm() + StringUtils.SPACE + "cm " + CARPET);
         }
-        if (Objects.nonNull(product.getLeafCategory()) &&  !product.getLeafCategory().equals(StringUtils.EMPTY)){
+        if (Objects.nonNull(product.getLeafCategory()) && !product.getLeafCategory().equals(StringUtils.EMPTY)) {
             metadataKeywords.add(product.getLeafCategory());
         }
 
