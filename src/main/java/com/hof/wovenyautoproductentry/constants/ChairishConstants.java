@@ -50,6 +50,7 @@ public class ChairishConstants {
         colorMap.put("Brown", "Brown");
         colorMap.put("Nvay Blue", "Navy Blue");
         colorMap.put("Black", "Black");
+        colorMap.put("Multicolor", "Red");
     }
 
     public static final Map<String, String> patternMap;
@@ -101,6 +102,32 @@ public class ChairishConstants {
         styleMap.put("Vintage Modern", "Mid-century Modern");
         styleMap.put("Art Deco", "Art Deco");
         styleMap.put("Traditional", "Traditional");
+
+    }
+
+    public static final Map<String, String> materialMap;
+
+    static {
+        materialMap = new HashMap<>();
+        materialMap.put("Silk","Silk");
+        materialMap.put("Goat Hair","Goat Skin");
+        materialMap.put("cotton","cotton");
+        materialMap.put("Cotton fabric","cotton");
+        materialMap.put("Cotton Fabric","cotton");
+        materialMap.put("Textile Recycle","Textile");
+        materialMap.put("Orlon","Fiber");
+        materialMap.put("Goat hair","Goat Skin");
+        materialMap.put("Hemp","Hemp");
+        materialMap.put("Mohair","hair");
+        materialMap.put("Sisal","Sisal");
+        materialMap.put("Camel Hair","Goat Skin");
+        materialMap.put("Wool.Cotton","wool");
+        materialMap.put("Goat Hair;Wool","wool");
+        materialMap.put("Cotton","cotton");
+        materialMap.put("Wool","wool");
+        materialMap.put("Handwoven","wool");
+        materialMap.put("Mo Hair","hair");
+        materialMap.put("Textile Recyle","textile");
 
     }
 }

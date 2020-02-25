@@ -19,8 +19,9 @@ public class ChromeWebDriverManager {
 
         // todo charish etsy farkı
         //options.setExperimentalOption("useAutomationExtension", false);
-        //options.setExperimentalOption("debuggerAddress", "localhost:9014");
-        //options.addArguments("disable-infobars"); // disabling infobars
+        options.setExperimentalOption("debuggerAddress", "localhost:9014");
+        options.addArguments("disable-popup-blocking");
+        options.addArguments("disable-infobars"); // disabling infobars
         //options.addArguments("--disable-extensions"); // disabling extensions
         //options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
 
