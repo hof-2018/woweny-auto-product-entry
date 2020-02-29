@@ -1,5 +1,6 @@
 package com.hof.wovenyautoproductentry.service;
 
+import com.hof.wovenyautoproductentry.configuration.properties.EtsyRugAuthenticationProperties;
 import com.hof.wovenyautoproductentry.constants.EtsyConstants;
 import com.hof.wovenyautoproductentry.domain.product.Product;
 import com.hof.wovenyautoproductentry.domain.product.ProductStatus;
@@ -25,9 +26,9 @@ import java.util.Set;
 @Slf4j
 public class EtsyRugEntryService {
 
-    private static final String username = "wovenyhome@gmail.com";
-    private static final String password =  "boyabat57";
-    private static final String image_url_pref =  "https://www.woveny.com/image/cache/";
+    private final String username;
+    private final String password;
+    private static final String image_url_pref = "https://www.woveny.com/image/cache/";
     //private static final String okan_local_image_path = "/Users/okan.yildirim/Documents/my-projects/woveny/images/";
     private static final String okan_local_image_path = "/home/okan/Documents/my-projects/woveny/images/";
 
@@ -36,8 +37,11 @@ public class EtsyRugEntryService {
 
     private final ProductRepository productRepository;
 
-    public EtsyRugEntryService(ProductRepository productRepository) {
+    public EtsyRugEntryService(ProductRepository productRepository,
+                               EtsyRugAuthenticationProperties properties) {
         this.productRepository = productRepository;
+        username = properties.getUsername();
+        password = properties.getPassword();
     }
 
     public void execute() throws InterruptedException {
@@ -174,7 +178,7 @@ public class EtsyRugEntryService {
                 });
                 System.out.println("product id: " + product.getId() + " skuNumber: " + product.getSkuNumber() + " is done");
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             driver.close();
             throw new RuntimeException("run time exception");
         }
@@ -185,7 +189,7 @@ public class EtsyRugEntryService {
         if (!name.contains("`")) {
             name = name + " " + product.getWidthByInches().replace(" ", "") + " x " + product.getLengthByInches().replace(" ", "") + " ft";
         }
-        return name.replace("`", ".").replace("\"", "").replace("&","");
+        return name.replace("`", ".").replace("\"", "").replace("&", "");
     }
 
     private void downloadImage(String source) {
@@ -210,20 +214,20 @@ public class EtsyRugEntryService {
 
     private String getMaterials(Set<String> materials) {
         StringBuilder materialAsString = new StringBuilder();
-        materials.forEach( material -> materialAsString.append(material).append(","));
+        materials.forEach(material -> materialAsString.append(material).append(","));
         return StringUtils.chop(materialAsString.toString());
     }
 
     private String getTags(Product product) {
         StringBuilder tags = new StringBuilder();
         Set<String> metaKeyword = product.getMetaKeyword();
-        metaKeyword.forEach( tag -> tags.append(tag).append(","));
+        metaKeyword.forEach(tag -> tags.append(tag).append(","));
         return tags.append("Rug").toString();
     }
 
     private String generateDescription(Product product) {
         StringBuilder description = new StringBuilder();
-        if (product.getMetaDescription() == null || product.getMetaDescription().equals(StringUtils.EMPTY)){
+        if (product.getMetaDescription() == null || product.getMetaDescription().equals(StringUtils.EMPTY)) {
             description.append(product.getName());
         } else {
             description.append(product.getMetaDescription());

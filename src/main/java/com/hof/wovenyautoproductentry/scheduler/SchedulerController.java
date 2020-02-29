@@ -3,7 +3,6 @@ package com.hof.wovenyautoproductentry.scheduler;
 import com.hof.wovenyautoproductentry.service.ChairishRugEntryService;
 import com.hof.wovenyautoproductentry.service.EtsyPillowEntryService;
 import com.hof.wovenyautoproductentry.service.EtsyRugEntryService;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -27,7 +26,7 @@ public class SchedulerController {
                 "Cron -" + System.currentTimeMillis() / 1000);
     }
 
-   // @Scheduled(fixedDelay = 1000 * 3)
+    //@Scheduled(fixedDelay = 1000 * 3)
     public void scheduleChairishRugEntry() throws InterruptedException {
         System.out.println(
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Chairish rug entry job is started.");
@@ -36,7 +35,7 @@ public class SchedulerController {
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Chairish rug entry job is finished.");
     }
 
-    @Scheduled(fixedDelay = 1000 * 2)
+    //@Scheduled(fixedDelay = 1000 * 2)
     public void scheduleEtsyRugEntry() throws InterruptedException {
         System.out.println(
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Etsy rug entry job is started.");
@@ -53,5 +52,4 @@ public class SchedulerController {
         System.out.println(
                 "Fixed rate task - " + System.currentTimeMillis() / 1000 + " " + new Date() + " Etsy rug entry job is finished.");
     }
-
 }
