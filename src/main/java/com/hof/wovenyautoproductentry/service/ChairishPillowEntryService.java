@@ -1,6 +1,5 @@
 package com.hof.wovenyautoproductentry.service;
 
-import com.hof.wovenyautoproductentry.configuration.properties.ChairishRugAuthenticationProperties;
 import com.hof.wovenyautoproductentry.constants.ChairishConstants;
 import com.hof.wovenyautoproductentry.domain.product.Product;
 import com.hof.wovenyautoproductentry.repository.ProductRepository;
@@ -21,24 +20,15 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 @Service
-public class ChairishRugEntryService {
-    private static final String CHAIRISH_DASHBOARD_PAGE = "https://www.chairish.com/account/login";
+public class ChairishPillowEntryService {
+
     private static final String CHAIRISH_CREATION_PAGE = "https://www.chairish.com/product/create";
-    private final String username;
-    private final String password;
-    private static final String HASAN_LOCAL_PATH = "C:\\Users\\hasanemre.ari\\Desktop\\";
-    private static final String HASAN_NEW_FOLDER = "3301-3400\\";
-    private static final String CHAIRISH_EMAIL = "hetyemez@yahoo.com";
-    private static final String CHAIRISH_PASSWORD = "etyemez57";
     private static final String HASAN_LOCAL_PATH = "C:\\Users\\hasanemre.ari\\Desktop\\Java\\chairish_photos\\";
 
     private final ProductRepository productRepository;
 
-    public ChairishRugEntryService(ProductRepository productRepository,
-                                   ChairishRugAuthenticationProperties properties) {
+    public ChairishPillowEntryService(ProductRepository productRepository) {
         this.productRepository = productRepository;
-        username = properties.getUsername();
-        password = properties.getPassword();
     }
 
     public void execute() throws InterruptedException {
@@ -55,7 +45,7 @@ public class ChairishRugEntryService {
 //        SeleniumUtils.openUrl(driver, CHAIRISH_CREATION_PAGE);
 //        SeleniumUtils.clickElement(driver, "//*[@id=\"content\"]/div/div/div[2]/span[2]/a");
 
-        List<Product> products = productRepository.findAllBySkuNumberGreaterThanAndSkuNumberIsLessThanAndIsUploadedChairish("3498", "3601", false);
+        List<Product> products = productRepository.findAllBySkuNumberGreaterThanAndSkuNumberIsLessThanAndIsUploadedChairish("3498", "3600", false);
 
         for (Product product : products) {
 
@@ -74,12 +64,17 @@ public class ChairishRugEntryService {
                     productRepository.save(previousProduct);
                 }
                 //////////Category
-                //Click Category Input
+                //Click category input
                 SeleniumUtils.clickElement(driver, "//*[@id=\"id_categories\"]");
                 Thread.sleep(1000);
-                //Select Rugs Checkbox
-                SeleniumUtils.clickElement(driver, "//*[@id=\"js-basic-fields\"]/div[2]/fieldset/div[2]/div[1]/div[1]/div/ul[2]/li[9]/div");
-                Thread.sleep(1000);
+                //Click decor
+                SeleniumUtils.clickElement(driver, "//*[@id=\"js-basic-fields\"]/div[2]/fieldset/div[2]/div[1]/div[1]/div/ul[2]/li[3]/div[1]");
+                Thread.sleep(500);
+                //Click decor>textiles
+                SeleniumUtils.clickElement(driver, "//*[@id=\"js-basic-fields\"]/div[2]/fieldset/div[2]/div[1]/div[1]/div/ul[2]/li[3]/div[2]/ul[2]/li[4]/div[1]");
+                Thread.sleep(500);
+                //Click decor>textiles>decorative pillow covers
+                SeleniumUtils.clickElement(driver, "//*[@id=\"js-basic-fields\"]/div[2]/fieldset/div[2]/div[1]/div[1]/div/ul[2]/li[3]/div[2]/ul[2]/li[4]/div[2]/ul[2]/li[1]/div/label[1]/span");
 
                 //////////Photo
                 List<String> images = new ArrayList<>();
@@ -129,7 +124,7 @@ public class ChairishRugEntryService {
                 String weave = product.getWeave().name().equals("Handknotted") ? "Hand Knotted" : "Flatweave";
                 SeleniumUtils.selectFromElementByName(driver, "rug_construction", weave);
                 //////////Materials
-                SeleniumUtils.clickElement(driver, "//*[@id=\"id_materials\"]");
+                SeleniumUtils.clickElement(driver,"//*[@id=\"id_materials\"]");
                 for (String material : product.getMaterials()) {
                     selectMaterial(driver, material);
                 }
@@ -168,7 +163,7 @@ public class ChairishRugEntryService {
                 //////////Height
                 SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"id_dimension_height\"]", length);
                 //////////Period Made
-                SeleniumUtils.selectFromElementByName(driver, "period_made", ChairishConstants.periodMade);
+                SeleniumUtils.selectFromElementByName(driver, "period_made", ChairishConstants.periodMadeForPillow);
                 //////////Used code
                 SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/div[3]/fieldset/div[5]/ul/li[1]/label/span[1]");
                 //////////Used code
@@ -181,10 +176,11 @@ public class ChairishRugEntryService {
                 SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"id_sku\"]", product.getSkuNumber());
                 //////////Price
                 SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"id_price\"]", multiplyPrice(product.getPrice(), 1.2));
+                //////////Trade Discount
+                SeleniumUtils.sendKeysToElement(driver,"//*[@id=\"id_trade_discount_percent\"]",ChairishConstants.discountPillow);
                 //////////Reserve Price
                 SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"id_reserve_price\"]", multiplyPrice(product.getPrice(), 1.2));
                 //////////Arrange my own shipping
-                //SeleniumUtils.sendKeysToElementWithSubmitSpace(driver,"//*[@id=\"id_should_chairish_handle_shipping_1\"]","");
                 SeleniumUtils.clickElement(driver, "//*[@id=\"js-logistics-fields\"]/div[2]/div[5]/fieldset/div[1]/ul/li[2]/div/label/span[1]");
                 Thread.sleep(1000);
                 //////////I will charge for shipping
@@ -192,15 +188,11 @@ public class ChairishRugEntryService {
                 SeleniumUtils.clickElement(driver, "//*[@id=\"js-seller-delegated-shipping-options\"]/div/ul/li[2]/div/label/span[1]");
                 Thread.sleep(1000);
                 //////////Shipping Charge
-                SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"id_seller_delegated_shipping_charge\"]", ChairishConstants.shippingPriceRug);
+                SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"id_seller_delegated_shipping_charge\"]", ChairishConstants.shippingPricePillow);
                 //Todo Uncomment when go live
                 //////////Submit Button
                 Thread.sleep(5000);
                 SeleniumUtils.clickElement(driver, "//*[@id=\"content\"]/form/div[7]/fieldset/div/div[1]/button[2]");
-                if (index == products.size()) {
-                    product.setUploadedChairish(true);
-                    productRepository.save(product);
-                }
 
                 Thread.sleep(7000);
             } catch (Exception e) {
@@ -355,4 +347,6 @@ public class ChairishRugEntryService {
 //                });
 //        return imagePathList;
 //    }
+
+
 }
