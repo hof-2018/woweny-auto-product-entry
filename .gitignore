@@ -32,3 +32,6 @@ build/
 
 ### Os ###
 .DS_Store
+
+### Local Config File ###
+*secret.yml

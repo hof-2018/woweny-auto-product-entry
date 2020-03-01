@@ -1,5 +1,6 @@
 package com.hof.wovenyautoproductentry.service;
 
+import com.hof.wovenyautoproductentry.configuration.properties.EtsyPillowAuthenticationProperties;
 import com.hof.wovenyautoproductentry.constants.EtsyConstants;
 import com.hof.wovenyautoproductentry.domain.product.Product;
 import com.hof.wovenyautoproductentry.domain.product.ProductStatus;
@@ -25,16 +26,18 @@ import java.util.Set;
 @Slf4j
 public class EtsyPillowEntryService {
 
-    private static final String username = "hetyemez@yahoo.com";
-    private static final String password =  "etyemez57";
+    private final String username;
+    private final String password;
     private static final String okan_local_image_path = "/Users/okan.yildirim/Documents/my-projects/woveny/images/";
 
     private final ProductRepository productRepository;
 
-    public EtsyPillowEntryService(ProductRepository productRepository) {
+    public EtsyPillowEntryService(ProductRepository productRepository,
+                                  EtsyPillowAuthenticationProperties properties) {
         this.productRepository = productRepository;
+        username = properties.getUsername();
+        password = properties.getPassword();
     }
-
 
     public void execute() throws InterruptedException {
         String ETSY_DASHBOARD_PAGE = "https://www.etsy.com/your/shops/me/dashboard?ref=mcpa";
@@ -92,10 +95,10 @@ public class EtsyPillowEntryService {
             Thread.sleep(1500);
             ///////Main Color
             ArrayList<String> colors = new ArrayList<>(product.getColors());
-            if (!colors.isEmpty()){
+            if (!colors.isEmpty()) {
                 SeleniumUtils.selectFromElement(driver, "//*[@id=\"attribute-2\"]", EtsyConstants.colorMap.get(colors.get(0)));
                 ///////Secondary Color
-                if (colors.size() > 1){
+                if (colors.size() > 1) {
                     SeleniumUtils.selectFromElement(driver, "//*[@id=\"attribute-271\"]", EtsyConstants.colorMap.get(colors.get(1)));
                 }
             }
@@ -104,9 +107,9 @@ public class EtsyPillowEntryService {
             SeleniumUtils.selectFromElement(driver, "//*[@id=\"attribute-348\"]", "Cover only");
 
 
-            if (!product.getLengthByInches().equals(StringUtils.EMPTY) && !product.getWidthByInches().equals(StringUtils.EMPTY)){
+            if (!product.getLengthByInches().equals(StringUtils.EMPTY) && !product.getWidthByInches().equals(StringUtils.EMPTY)) {
                 //////////Lenght
-                String leafCategory= product.getLeafCategory();// 12"X24"(30X60CM) Pillows
+                String leafCategory = product.getLeafCategory();// 12"X24"(30X60CM) Pillows
                 List<String> inches = Arrays.asList(leafCategory.split("\\("));
                 List<String> wL = Arrays.asList(inches.get(0).split("X"));
 
@@ -124,7 +127,7 @@ public class EtsyPillowEntryService {
             String description = generateDescription(product);
             SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"description\"]", description);
             //////////Section
-            SeleniumUtils.selectFromElement(driver, "//*[@id=\"sections\"]", EtsyConstants.leafCategoryPillowMap.get(product.getLeafCategory()).replace(" ",""));
+            SeleniumUtils.selectFromElement(driver, "//*[@id=\"sections\"]", EtsyConstants.leafCategoryPillowMap.get(product.getLeafCategory()).replace(" ", ""));
             //////////Tags
             String tags = getTags(product);
             SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"tags\"]", tags);
@@ -155,14 +158,14 @@ public class EtsyPillowEntryService {
                 File fileToDelete = FileUtils.getFile(okan_local_image_path + fileNameOfImage);
                 boolean success = FileUtils.deleteQuietly(fileToDelete);
             });
-            System.out.println("product id: " + product.getId() + " skuNumber: " + product.getSkuNumber()+ " is done");
+            System.out.println("product id: " + product.getId() + " skuNumber: " + product.getSkuNumber() + " is done");
         }
         driver.close();
     }
 
     private String getTitle(Product product) {
         String name = product.getName();
-        String leafCategory= product.getLeafCategory();// 12"X24"(30X60CM) Pillows
+        String leafCategory = product.getLeafCategory();// 12"X24"(30X60CM) Pillows
         List<String> inches = Arrays.asList(leafCategory.split("\\("));
         return inches.get(0) + " " + name;
     }
@@ -189,20 +192,20 @@ public class EtsyPillowEntryService {
 
     private String getMaterials(Set<String> materials) {
         StringBuilder materialAsString = new StringBuilder();
-        materials.forEach( material -> materialAsString.append(material).append(","));
+        materials.forEach(material -> materialAsString.append(material).append(","));
         return StringUtils.chop(materialAsString.toString());
     }
 
     private String getTags(Product product) {
         StringBuilder tags = new StringBuilder();
         Set<String> metaKeyword = product.getMetaKeyword();
-        metaKeyword.forEach( tag -> tags.append(tag).append(","));
+        metaKeyword.forEach(tag -> tags.append(tag).append(","));
         return tags.append("Rug").toString();
     }
 
     private String generateDescription(Product product) {
         StringBuilder description = new StringBuilder();
-        if (product.getMetaDescription() == null || product.getMetaDescription().equals(StringUtils.EMPTY)){
+        if (product.getMetaDescription() == null || product.getMetaDescription().equals(StringUtils.EMPTY)) {
             description.append(product.getName());
         } else {
             description.append(product.getMetaDescription());

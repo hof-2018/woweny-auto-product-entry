@@ -1,5 +1,6 @@
 package com.hof.wovenyautoproductentry.service;
 
+import com.hof.wovenyautoproductentry.configuration.properties.ChairishRugAuthenticationProperties;
 import com.hof.wovenyautoproductentry.constants.ChairishConstants;
 import com.hof.wovenyautoproductentry.constants.RugConstants;
 import com.hof.wovenyautoproductentry.domain.product.Product;
@@ -20,15 +21,18 @@ import java.util.stream.IntStream;
 public class ChairishRugEntryService {
     private static final String CHAIRISH_DASHBOARD_PAGE = "https://www.chairish.com/account/login";
     private static final String CHAIRISH_CREATION_PAGE = "https://www.chairish.com/product/create";
-    private static final String CHAIRISH_EMAIL = "hetyemez@yahoo.com";
-    private static final String CHAIRISH_PASSWORD = "etyemez57";
+    private final String username;
+    private final String password;
     private static final String HASAN_LOCAL_PATH = "C:\\Users\\hasanemre.ari\\Desktop\\";
     private static final String HASAN_NEW_FOLDER = "3301-3400\\";
 
     private final ProductRepository productRepository;
 
-    public ChairishRugEntryService(ProductRepository productRepository) {
+    public ChairishRugEntryService(ProductRepository productRepository,
+                                   ChairishRugAuthenticationProperties properties) {
         this.productRepository = productRepository;
+        username = properties.getUsername();
+        password = properties.getPassword();
     }
 
     public void execute() throws InterruptedException {
@@ -115,13 +119,13 @@ public class ChairishRugEntryService {
                 String weave = product.getWeave().name().equals("Handknotted") ? "Hand Knotted" : "Flatweave";
                 SeleniumUtils.selectFromElementByName(driver, "rug_construction", weave);
                 //////////Materials
-                SeleniumUtils.clickElement(driver,"//*[@id=\"id_materials\"]");
+                SeleniumUtils.clickElement(driver, "//*[@id=\"id_materials\"]");
                 for (String material : product.getMaterials()) {
                     String materialFromMap = ChairishConstants.materialMap.get(material);
                     SeleniumUtils.sendKeysToElementWithSubmitDownEnter(driver, "//*[@id=\"id_materials\"]", materialFromMap);
                 }
                 //////////Dominant Color
-                SeleniumUtils.clickElement(driver,"//*[@id=\"id_primary_color_code\"]");
+                SeleniumUtils.clickElement(driver, "//*[@id=\"id_primary_color_code\"]");
                 ArrayList<String> colors = new ArrayList<>(product.getColors());
                 IntStream.range(0, product.getColors().size())
                         .forEach(i -> {
@@ -226,6 +230,7 @@ public class ChairishRugEntryService {
         Integer inch = Integer.parseInt(firstPart) * 12 + Integer.parseInt(secondPart);
         return inch.toString();
     }
+
     private List<String> generateImagePaths(String skuNumber, int additionalImageNumber) {
         String imageSuffix = ".jpg";
         List<String> alphabet = List.of("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
