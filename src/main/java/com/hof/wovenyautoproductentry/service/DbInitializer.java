@@ -14,6 +14,7 @@ import java.util.List;
 @Component
 public class DbInitializer {
     private static final String CSV_FILE_PATH = "export_2020-02-23.csv";
+    private static final String AMARA_CSV_FILE_PATH = "AmaraChairishCsv.csv";
     private static final Character CSV_SPLIT_BY = ';';
 
     private final CSVReader csvReader;
@@ -28,9 +29,9 @@ public class DbInitializer {
         this.productValidator = productValidator;
     }
 
-    //@PostConstruct
+    @PostConstruct
     void initialize() {
-        String filePath = ClassLoader.getSystemResource(CSV_FILE_PATH).getPath();
+        String filePath = ClassLoader.getSystemResource(AMARA_CSV_FILE_PATH).getPath();
         try {
             Iterable<CSVRecord> records = csvReader.read(filePath, CSV_SPLIT_BY);
             records.forEach(record -> {
