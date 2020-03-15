@@ -1,7 +1,10 @@
 package com.hof.wovenyautoproductentry.service;
 
+import com.hof.wovenyautoproductentry.constants.AmaraCsvHeaderConstants;
+import com.hof.wovenyautoproductentry.domain.product.AmaraProduct;
 import com.hof.wovenyautoproductentry.domain.product.Product;
 import com.hof.wovenyautoproductentry.domain.product.ProductType;
+import com.hof.wovenyautoproductentry.repository.AmaraProductRepository;
 import com.hof.wovenyautoproductentry.repository.ProductRepository;
 import com.hof.wovenyautoproductentry.util.CSVReader;
 import org.apache.commons.csv.CSVRecord;
@@ -19,18 +22,27 @@ public class DbInitializer {
 
     private final CSVReader csvReader;
     private final ProductMapper productMapper;
+    private final AmaraProductMapper amaraProductMapper;
     private final ProductRepository productRepository;
+    private final AmaraProductRepository amaraProductRepository;
     private final ProductValidator productValidator;
 
-    public DbInitializer(CSVReader csvReader, ProductMapper mapper, ProductRepository productRepository, ProductValidator productValidator) {
+    public DbInitializer(CSVReader csvReader,
+                         ProductMapper mapper,
+                         AmaraProductMapper amaraProductMapper,
+                         ProductRepository productRepository,
+                         AmaraProductRepository amaraProductRepository,
+                         ProductValidator productValidator) {
         this.csvReader = csvReader;
         this.productMapper = mapper;
+        this.amaraProductMapper = amaraProductMapper;
         this.productRepository = productRepository;
+        this.amaraProductRepository = amaraProductRepository;
         this.productValidator = productValidator;
     }
 
-    @PostConstruct
-    void initialize() {
+    //@PostConstruct
+    public void initialize() {
         String filePath = ClassLoader.getSystemResource(AMARA_CSV_FILE_PATH).getPath();
         try {
             Iterable<CSVRecord> records = csvReader.read(filePath, CSV_SPLIT_BY);
@@ -38,6 +50,23 @@ public class DbInitializer {
                 Product product = productMapper.csvRecordToProductEntity(record);
                 System.out.println(product);
                 //productRepository.save(product);
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @PostConstruct
+    public void initializeAmaraProducts() {
+        String filePath = ClassLoader.getSystemResource(AMARA_CSV_FILE_PATH).getPath();
+        try {
+            Iterable<CSVRecord> records = csvReader.read(filePath, CSV_SPLIT_BY);
+            records.forEach(record -> {
+                if (!record.get(AmaraCsvHeaderConstants.SKU_NUMBER).isEmpty()) {
+                    AmaraProduct amaraProduct = amaraProductMapper.csvRecordToProductEntity(record);
+                    System.out.println(amaraProduct.getSkuNumber());
+                    amaraProductRepository.save(amaraProduct);
+                }
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,5 +82,4 @@ public class DbInitializer {
             //productRepository.save(product);
         });
     }
-
 }
