@@ -13,10 +13,11 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class DbInitializer {
-    private static final String CSV_FILE_PATH = "export_2020-02-23.csv";
+    private static final String CSV_FILE_PATH = "export_2020-06-21.csv";
     private static final String AMARA_CSV_FILE_PATH = "AmaraChairishCsv.csv";
     private static final Character CSV_SPLIT_BY = ';';
 
@@ -41,22 +42,23 @@ public class DbInitializer {
         this.productValidator = productValidator;
     }
 
-    //@PostConstruct
+   // @PostConstruct
     public void initialize() {
-        String filePath = ClassLoader.getSystemResource(AMARA_CSV_FILE_PATH).getPath();
+        String filePath = ClassLoader.getSystemResource(CSV_FILE_PATH).getPath();
         try {
             Iterable<CSVRecord> records = csvReader.read(filePath, CSV_SPLIT_BY);
             records.forEach(record -> {
                 Product product = productMapper.csvRecordToProductEntity(record);
-                System.out.println(product);
-                //productRepository.save(product);
+                //if (Objects.nonNull(product.getProductType()) && product.getProductType().equals(ProductType.RUG))
+                    //System.out.println(product);
+                productRepository.save(product);
             });
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    @PostConstruct
+    //@PostConstruct
     public void initializeAmaraProducts() {
         String filePath = ClassLoader.getSystemResource(AMARA_CSV_FILE_PATH).getPath();
         try {

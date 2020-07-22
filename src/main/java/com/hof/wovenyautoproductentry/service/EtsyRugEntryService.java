@@ -29,11 +29,8 @@ public class EtsyRugEntryService {
     private final String username;
     private final String password;
     private static final String image_url_pref = "https://www.woveny.com/image/cache/";
-    //private static final String okan_local_image_path = "/Users/okan.yildirim/Documents/my-projects/woveny/images/";
-    private static final String okan_local_image_path = "/home/okan/Documents/my-projects/woveny/images/";
-
-    //private static final String username = "hetyemez@yahoo.com";
-    //private static final String password =  "etyemez57";
+    private static final String okan_local_image_path = "/Users/okan.yildirim/Documents/my-projects/woveny/images/";
+    //private static final String okan_local_image_path = "/home/okan/Documents/my-projects/woveny/images/";
 
     private final ProductRepository productRepository;
 
@@ -46,7 +43,6 @@ public class EtsyRugEntryService {
 
     public void execute() throws InterruptedException {
         String ETSY_DASHBOARD_PAGE = "https://www.etsy.com/your/shops/me/dashboard?ref=mcpa";
-        String ETSY_CREATION_PAGE = "https://www.etsy.com/your/shops/WovenHane/tools/listings/create";
 
         WebDriver driver = SeleniumUtils.openChrome(ETSY_DASHBOARD_PAGE);
         //Login
@@ -63,7 +59,7 @@ public class EtsyRugEntryService {
         //Product product = productRepository.findBySkuNumber("3301");
         //List<Product> products = productRepository.getProductsForEtsyWithLimit(PageRequest.of(0,10));
 
-        List<Product> products = productRepository.findByProductTypeAndQuantityAndStatusAndStockStatusNotAndIsUploadedEtsy(PageRequest.of(0, 100), ProductType.RUG, 1, ProductStatus.ACTIVE, "Out Of Stock", false);
+        List<Product> products = productRepository.findByProductTypeAndQuantityAndStatusAndStockStatusNotAndIsUploadedEtsy(PageRequest.of(0, 200), ProductType.RUG, 1, ProductStatus.ACTIVE, "Out Of Stock", false);
 
         try {
 
@@ -138,27 +134,43 @@ public class EtsyRugEntryService {
                 //////////Tags
                 String tags = getTags(product);
                 SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"tags\"]", tags);
-                SeleniumUtils.clickElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[4]/div[24]/div/div/div[2]/div[1]/div[1]/div/div[2]/button");
+                //SeleniumUtils.clickElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[4]/div[24]/div/div/div[2]/div[1]/div[1]/div/div[2]/button");
+                SeleniumUtils.clickElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[5]/div[24]/div/div/div[2]/div[1]/div[1]/div/div[2]/button");
+
                 //////////Materials
                 String materials = getMaterials(product.getMaterials());
                 SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"materials\"]", materials);
-                SeleniumUtils.clickElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[4]/div[25]/div/div/div[2]/div[1]/div[1]/div/div[2]/button");
+                SeleniumUtils.clickElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[5]/div[25]/div/div/div[2]/div[1]/div[1]/div/div[2]/button");
+
+
                 //////////Price
                 SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"price_retail-input\"]", product.getPrice().toString());
                 //////////SKU Number
                 SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"SKU-input\"]", product.getSkuNumber());
                 //////////Shipping
                 //Old SeleniumUtils.sendKeysToElementWithSubmitSpace(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[1]/div/div[1]/div/div[1]/label/input");
-                SeleniumUtils.sendKeysToElementWithSubmitSpace(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/label/input");
-                SeleniumUtils.selectFromElement(driver, "//*[@id=\"processing-time-selector\"]", "1-3 business days");
+                SeleniumUtils.sendKeysToElementWithSubmitSpace(driver, "//*[@id=\"unlinked-profile\"]");
+
+                //SeleniumUtils.selectFromElement(driver, "//*[@id=\"4e7f6d65-f4ed-40ee-8e66-278cbbe5f1bf\"]", "1-3 business days");
+                SeleniumUtils.selectFromElement3(driver, "1-3 business days", 2);
                 //Shipment for Turkey
-                SeleniumUtils.selectFromElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[3]/div/div/div/div[2]/select", "Other");
-                SeleniumUtils.selectFromElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[4]/div[2]/div/div/div[1]/label/select", "2");
-                SeleniumUtils.selectFromElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[4]/div[2]/div/div/div[3]/label/select", "5");
+                //SeleniumUtils.selectFromElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[3]/div/div/div/div[2]/select", "Other");
+                SeleniumUtils.selectFromElement3(driver, "Other", 3);
+
+               // SeleniumUtils.selectFromElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[4]/div[2]/div/div/div[1]/label/select", "2");
+                SeleniumUtils.selectFromElement3(driver, "2", 4);
+                // SeleniumUtils.selectFromElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[4]/div[2]/div/div/div[3]/label/select", "5");
+                SeleniumUtils.selectFromElement3(driver, "5", 5);
+
                 //Shipment for Other
-                SeleniumUtils.selectFromElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[2]/div/div[1]/div/div[1]/div[3]/div/div/div/div[2]/select", "Other");
-                SeleniumUtils.selectFromElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[2]/div/div[1]/div/div[1]/div[4]/div[2]/div/div/div[1]/label/select", "2");
-                SeleniumUtils.selectFromElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[2]/div/div[1]/div/div[1]/div[4]/div[2]/div/div/div[3]/label/select", "5");
+
+                SeleniumUtils.selectFromElement3(driver, "Other", 7);
+                SeleniumUtils.selectFromElement3(driver, "2", 8);
+                SeleniumUtils.selectFromElement3(driver, "5", 9);
+
+                //SeleniumUtils.selectFromElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[2]/div/div[1]/div/div[1]/div[3]/div/div/div/div[2]/select", "Other");
+                //SeleniumUtils.selectFromElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[2]/div/div[1]/div/div[1]/div[4]/div[2]/div/div/div[1]/label/select", "2");
+                //SeleniumUtils.selectFromElement(driver, "//*[@id=\"page-region\"]/div/div/div[2]/div/div/div/div[11]/div/div/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]/div[2]/div/div[1]/div/div[1]/div[4]/div[2]/div/div/div[3]/label/select", "5");
 
                 //////////First Publish Button
                 SeleniumUtils.clickElement(driver, "//*[@id=\"page-region\"]/div/div/div[3]/div/div[1]/div/div/div[2]/button[3]");
@@ -180,7 +192,7 @@ public class EtsyRugEntryService {
             }
         } catch (Exception e) {
             driver.close();
-            throw new RuntimeException("run time exception");
+            throw e;
         }
     }
 
