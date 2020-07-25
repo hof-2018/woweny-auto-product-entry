@@ -12,7 +12,7 @@ public enum ProductType {
         if (weave.equalsIgnoreCase("PILLOWS"))
             return PILLOW;
 
-        return null;
-        // throw new IllegalArgumentException("Product Type is not valid"); todo null
+        // return null;
+        throw new IllegalArgumentException("Product Type is not valid");
     }
 }

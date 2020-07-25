@@ -68,8 +68,8 @@ public class ProductMapper {
         //RUGS///HANDKNOTTED RUGS:::RUGS///HANDKNOTTED RUGS///Turkish Anatolian Rugs:::RUGS
         //RUGS///HANDWOVEN KILIM RUGS:::RUGS///HANDWOVEN KILIM RUGS///Vintage Modern Kilims:::RUGS
 
-        ProductType productType = getProductType("PILLOWS:::PILLOWS///16\"x16\"(40x40cm)");
-        LeafCategory leafCategory = getLeafCategory("PILLOWS:::PILLOWS///16\"x16\"(40x40cm)");
+        //ProductType productType = getProductType("PILLOWS:::PILLOWS///16\"x16\"(40x40cm)");
+        //LeafCategory leafCategory = getLeafCategory("PILLOWS:::PILLOWS///16\"x16\"(40x40cm)");
 
         Product product = ProductBuilder.aProduct()
                 .skuNumber(skuNumber)
@@ -105,7 +105,6 @@ public class ProductMapper {
     }
 
     private List<String> splitByTripleColon(String field) {
-        //FIXME if empty check!
         if (Objects.equals(field, StringUtils.EMPTY)){
             return new ArrayList<>();
         }
@@ -113,7 +112,6 @@ public class ProductMapper {
     }
 
     private List<String> splitByComma(String field) {
-        //FIXME if empty check!
         if (Objects.equals(field, StringUtils.EMPTY)){
             return new ArrayList<>();
         }
@@ -144,25 +142,34 @@ public class ProductMapper {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
         return formatter.parse(field);
-        // todo
         } catch (ParseException e) {
             throw new IllegalStateException("Parsing error - string to date",e);
         }
     }
 
-    private ProductType getProductType(String categoryPath){
+    public ProductType getProductType(String categoryPath){
         // --> RUGS///HANDKNOTTED RUGS:::RUGS///HANDKNOTTED RUGS///Turkish Oushak:::RUGS
         // PILLOWS:::PILLOWS///16"x16"(40x40cm)
         //TODO sort by size get longest then manipulate
         List<String> categories = Arrays.asList(categoryPath.split("///"));
         List<String> subCategories = Arrays.asList(categories.get(0).split(":::"));
-        return ProductType.productTypeFactory(subCategories.get(0));
+        if (categoryPath.contains("RUGS"))
+            return ProductType.RUG;
+        else if (categoryPath.contains("PILLOWS"))
+            return ProductType.PILLOW;
+        else
+            return ProductType.productTypeFactory(subCategories.get(0));
     }
 
     private LeafCategory getLeafCategory (String categoryPath){
         // --> RUGS///HANDKNOTTED RUGS:::RUGS///HANDKNOTTED RUGS///Turkish Oushak:::RUGS
+        // RUGS///HANDWOVEN KILIM RUGS:::RUGS///HANDWOVEN KILIM RUGS///Colorful Kilims:::RUGS:::MINI RUGS | DOOR MATS
         // PILLOWS:::PILLOWS///16"x16"(40x40cm)
         //TODO sort by size get longest then manipulate && trims space between words!!
+
+        if (categoryPath.equals("MINI RUGS | DOOR MATS"))
+            return LeafCategory.findLeafCategoryValue("MINI RUGS | DOOR MATS");
+
         List<String> fields = Arrays.asList(categoryPath.split("///"));
         List<String> leaf = Arrays.asList(fields.get(fields.size()-1).split(":::"));
         return LeafCategory.findLeafCategoryValue(leaf.get(0));

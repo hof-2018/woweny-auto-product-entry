@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.List;
+
 public class SeleniumUtils {
 
     public static WebDriver openChrome(String url) {
@@ -81,6 +83,36 @@ public class SeleniumUtils {
         Select dropdown = new Select(findElementByXpath(driver, xpath));
         Thread.sleep(1000);
         dropdown.selectByVisibleText(Selection);
+    }
+
+    public static void selectFromElement2(WebDriver driver, String text, String Selection) throws InterruptedException {
+        WebElement element = driver.findElement(By.xpath("//div[text()='" + text + "']"));
+        Select dropdown = new Select(element);
+        Thread.sleep(1000);
+        dropdown.selectByVisibleText(Selection);
+    }
+
+    public static void selectFromElement3(WebDriver driver, String Selection, int index) throws InterruptedException {
+
+        List<WebElement> elements = driver.findElements(By.className("wt-select__element"));
+
+        WebElement webElement = elements.get(index - 1);
+
+        Select dropdown = new Select(webElement);
+        Thread.sleep(1000);
+        dropdown.selectByVisibleText(Selection);
+
+       /* for (WebElement element : elements) {
+            Select dropdown = new Select(element);
+            Thread.sleep(1000);
+            try {
+                dropdown.selectByVisibleText(Selection);
+                break;
+            } catch (Exception e) {
+                continue;
+            }
+        }*/
+
     }
 
     public static void selectFromElementByName(WebDriver driver, String name, String Selection) throws InterruptedException {

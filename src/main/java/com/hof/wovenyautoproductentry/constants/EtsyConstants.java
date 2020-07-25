@@ -77,6 +77,7 @@ public class EtsyConstants {
         leafCategoryRugMap.put("Turkish Oushak Rugs","Vintage Oushak Rugs");
         leafCategoryRugMap.put("Vintage Modern Kilims","Vintage Modern Kilims");
         leafCategoryRugMap.put("Embroidered Kilims","Embroidered Kilims");
+        leafCategoryRugMap.put("MINI RUGS | DOOR MATS","Mini Rugs");
 
     }
 
@@ -91,6 +92,7 @@ public class EtsyConstants {
         leafCategoryPillowMap.put("20\"X20\"(50X50CM) Pillows","20\"x20\"(50x50cm)");
         leafCategoryPillowMap.put("16\"X24\"(40X60CM) Pillows","16\"x24\"(40x60cm)");
         leafCategoryPillowMap.put("18\"X18\"(45X45CM) Pillows","18\"x18\"(45x45cm)");
+        leafCategoryPillowMap.put("24\"X24\"(60X60CM) Pillows","24\"x24\"(60x60cm)");
 
     }
 }
