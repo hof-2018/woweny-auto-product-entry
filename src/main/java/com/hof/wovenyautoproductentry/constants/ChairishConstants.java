@@ -46,6 +46,7 @@ public class ChairishConstants {
         colorMap.put("Beige", "Beige");
         colorMap.put("tan", "Tan");
         colorMap.put("Cream", "Cream");
+        colorMap.put("Hemp", "Cream");
         colorMap.put("Rust", "Brown");
         colorMap.put("Turquoise", "Turquoise");
         colorMap.put("Khaki", "Khaki");

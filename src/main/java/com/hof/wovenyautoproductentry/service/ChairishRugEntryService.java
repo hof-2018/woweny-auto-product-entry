@@ -26,7 +26,6 @@ public class ChairishRugEntryService {
     private static final String CHAIRISH_CREATION_PAGE = "https://www.chairish.com/product/create";
     private final String username;
     private final String password;
-    private static final String HASAN_LOCAL_PATH = "C:\\Users\\hasanemre.ari\\Desktop\\";
     private static final String HASAN_NEW_FOLDER = "3301-3400\\";
     private static final String CHAIRISH_EMAIL = "hetyemez@yahoo.com";
     private static final String CHAIRISH_PASSWORD = "etyemez57";
@@ -55,7 +54,7 @@ public class ChairishRugEntryService {
 //        SeleniumUtils.openUrl(driver, CHAIRISH_CREATION_PAGE);
 //        SeleniumUtils.clickElement(driver, "//*[@id=\"content\"]/div/div/div[2]/span[2]/a");
 
-        List<Product> products = productRepository.findAllBySkuNumberGreaterThanAndSkuNumberIsLessThanAndIsUploadedChairish("3498", "3601", false);
+        List<Product> products = productRepository.findAllBySkuNumberGreaterThanAndSkuNumberIsLessThanAndIsUploadedChairish("3501", "3505", false);
 
         for (Product product : products) {
 
@@ -201,7 +200,6 @@ public class ChairishRugEntryService {
                     product.setUploadedChairish(true);
                     productRepository.save(product);
                 }
-
                 Thread.sleep(7000);
             } catch (Exception e) {
                 ((JavascriptExecutor) driver).executeScript("window.open()");

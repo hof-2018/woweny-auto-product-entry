@@ -13,10 +13,8 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
@@ -45,7 +43,7 @@ public class ChairishPillowEntryService {
 //        SeleniumUtils.openUrl(driver, CHAIRISH_CREATION_PAGE);
 //        SeleniumUtils.clickElement(driver, "//*[@id=\"content\"]/div/div/div[2]/span[2]/a");
 
-        List<Product> products = productRepository.findAllBySkuNumberGreaterThanAndSkuNumberIsLessThanAndIsUploadedChairish("3498", "3600", false);
+        List<Product> products = productRepository.findAllBySkuNumberGreaterThanAndSkuNumberIsLessThanAndIsUploadedChairish("52420", "52501", false);
 
         for (Product product : products) {
 
@@ -62,6 +60,7 @@ public class ChairishPillowEntryService {
                     Product previousProduct = products.get(index - 1);
                     previousProduct.setUploadedChairish(true);
                     productRepository.save(previousProduct);
+                    System.out.println("Sku number:" + previousProduct.getSkuNumber() + "entered.");
                 }
                 //////////Category
                 //Click category input
@@ -75,33 +74,26 @@ public class ChairishPillowEntryService {
                 Thread.sleep(500);
                 //Click decor>textiles>decorative pillow covers
                 SeleniumUtils.clickElement(driver, "//*[@id=\"js-basic-fields\"]/div[2]/fieldset/div[2]/div[1]/div[1]/div/ul[2]/li[3]/div[2]/ul[2]/li[4]/div[2]/ul[2]/li[1]/div/label[1]/span");
-
+                SeleniumUtils.clickElement(driver, "//*[@id=\"js-basic-fields\"]/div[2]/fieldset");
                 //////////Photo
                 List<String> images = new ArrayList<>();
                 images.add(product.getMainImageUrl());
                 images.addAll(product.getAdditionalImagePaths());
                 images.forEach(this::downloadImage);
                 Thread.sleep(400 * images.size());
-                //List<String> imagesPaths = generateImagePaths(product.getSkuNumber(), product.getAdditionalImagePaths().size());
 
                 IntStream.range(0, images.size())
                         .forEach(i -> {
                             String fileNameOfImage = getFileNameOfImage(images.get(i));
-                            String imageXpath = "//*[@id=\"js-basic-fields\"]/div[2]/div[1]/fieldset/div/div/div[2]/div[" + (i + 1) + "]/label/input";
+                            String imageXpath = "//*[@id=\"js-basic-fields\"]/div[2]/div[2]/fieldset/div/div/div[2]/div[" + (i + 1) + "]/label/input";
                             SeleniumUtils.sendKeysToElement(driver, imageXpath, HASAN_LOCAL_PATH + fileNameOfImage);
-                            //SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"js-basic-fields\"]/div[2]/div[1]/fieldset/div/div/div[2]/div[" + (i + 1) + "]/label/input", imagesPaths.get(i));
-                            //SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"js-basic-fields\"]/div[2]/div[1]/fieldset/div/div/div[2]/div[1]/label/input", imagesPaths.get(0));
-
                         });
-
-
                 //////////Description
                 SeleniumUtils.sendKeysToElement(driver, "//*[@id=\"id_description\"]", product.getMetaDescription());
                 //Unknown Checkbox
                 SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset/div[1]/div/div[1]/label[2]/span[1]");
                 Thread.sleep(1000);
                 //////////Styles
-
                 for (String style : product.getStyles()) {
                     String styleFromMap = ChairishConstants.styleMap.get(style);
                     if (Objects.nonNull(styleFromMap)) {
@@ -119,15 +111,10 @@ public class ChairishPillowEntryService {
                     SeleniumUtils.sendKeysToElementWithSubmitDownEnter(driver, "//*[@id=\"id_styles\"]", "Mid-Century Modern");*/
                     }
                 }
-                SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset");
-                //////////Rug Construction
-                String weave = product.getWeave().name().equals("Handknotted") ? "Hand Knotted" : "Flatweave";
-                SeleniumUtils.selectFromElementByName(driver, "rug_construction", weave);
+                SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset/div[1]/div/div[1]");
                 //////////Materials
                 SeleniumUtils.clickElement(driver,"//*[@id=\"id_materials\"]");
-                for (String material : product.getMaterials()) {
-                    selectMaterial(driver, material);
-                }
+                selectMaterial(driver, product.getMaterials());
                 SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset");
                 //////////Dominant Color
                 ArrayList<String> colors = new ArrayList<>(product.getColors());
@@ -138,20 +125,18 @@ public class ChairishPillowEntryService {
                                     SeleniumUtils.clickElement(driver, "//*[@id=\"id_primary_color_code\"]");
                                     Thread.sleep(1000);
                                     selectColorForDomain(driver, colors.get(i));
-                                    SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset");
-                                    SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset");
+                                    SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset/div[14]");
+                                    SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset/div[14]");
                                 } else {
                                     SeleniumUtils.clickElement(driver, "//*[@id=\"id_colors\"]");
                                     Thread.sleep(1000);
                                     selectColorForAdditional(driver, colors.get(i));
-                                    SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset");
+                                    SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset/div[14]");
                                 }
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
                         });
-                //////////Pattern
-                SeleniumUtils.selectFromElementByName(driver, "pattern", ChairishConstants.patternMap.get(product.getStyles().iterator().next()));
                 //////////Place of Origin
                 SeleniumUtils.selectFromElement(driver, "//*[@id=\"id_origin_region\"]", ChairishConstants.origin);
                 String length = getLengthByInch(product);//product.getLengthByInches().replace("`", ".").replace("\"", "").replace(" ", "").trim();
@@ -193,7 +178,13 @@ public class ChairishPillowEntryService {
                 //////////Submit Button
                 Thread.sleep(5000);
                 SeleniumUtils.clickElement(driver, "//*[@id=\"content\"]/form/div[7]/fieldset/div/div[1]/button[2]");
-
+                //if (index == products.size()) {
+                Product lastProduct = products.get(products.size() - 1);
+                if (product.getSkuNumber().equals(lastProduct.getSkuNumber())) {
+                    product.setUploadedChairish(true);
+                    productRepository.save(product);
+                    System.out.println("Sku number:" + product.getSkuNumber() + "entered.");
+                }
                 Thread.sleep(7000);
             } catch (Exception e) {
                 ((JavascriptExecutor) driver).executeScript("window.open()");
@@ -212,22 +203,24 @@ public class ChairishPillowEntryService {
 
     }
 
-    private void selectMaterial(WebDriver driver, String material) throws InterruptedException {
-        String materialFromMap = ChairishConstants.materialMap.get(material);
-        String materialXpath = ChairishConstants.materialMapXpath.get(materialFromMap);
-        switch (materialFromMap) {
-            case "Goat Skin":
-            case "hair":
-                SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset/div[4]/div[1]/div[1]/div/ul[2]/li[1]/div[1]");
-                Thread.sleep(1000);
-                SeleniumUtils.clickElement(driver, materialXpath);
-                SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset/div[4]/div[1]/div[1]/div/ul[2]/li[1]/div[1]");
-                break;
-            default:
-                SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset/div[4]/div[1]/div[1]/div/ul[2]/li[20]/div[1]");
-                Thread.sleep(1000);
-                SeleniumUtils.clickElement(driver, materialXpath);
-                SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset/div[4]/div[1]/div[1]/div/ul[2]/li[20]/div[1]");
+    private void selectMaterial(WebDriver driver, Set<String> materials) throws InterruptedException {
+        Set<String> materialsSet = materials.stream().map(ChairishConstants.materialMap::get).collect(Collectors.toSet());
+        for (String materialFromMap : materialsSet) {
+            String materialXpath = ChairishConstants.materialMapXpath.get(materialFromMap);
+            switch (materialFromMap) {
+                case "Goat Skin":
+                case "hair":
+                    SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset/div[4]/div[1]/div[1]/div/ul[2]/li[1]/div[1]");
+                    Thread.sleep(1000);
+                    SeleniumUtils.clickElement(driver, materialXpath);
+                    SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset/div[4]/div[1]/div[1]/div/ul[2]/li[1]/div[1]");
+                    break;
+                default:
+                    SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset/div[4]/div[1]/div[1]/div/ul[2]/li[20]/div[1]");
+                    Thread.sleep(1000);
+                    SeleniumUtils.clickElement(driver, materialXpath);
+                    SeleniumUtils.clickElement(driver, "//*[@id=\"js-details-fields\"]/div[2]/fieldset/div[4]/div[1]/div[1]/div/ul[2]/li[20]/div[1]");
+            }
         }
     }
 
