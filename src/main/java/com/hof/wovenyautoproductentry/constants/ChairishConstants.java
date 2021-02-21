@@ -27,6 +27,8 @@ public class ChairishConstants {
         colorMap.put("Pink", "Pink");
         colorMap.put("Corai", "Orange");
         colorMap.put("Burgundy", "Purple");
+        colorMap.put("Burgudy", "Purple");
+        colorMap.put("Burgunduy", "Purple");
         colorMap.put("Blue", "Blue");
         colorMap.put("Mustard", "Orange");
         colorMap.put("Navy Blue", "Blue");
@@ -50,11 +52,17 @@ public class ChairishConstants {
         colorMap.put("Rust", "Brown");
         colorMap.put("Turquoise", "Turquoise");
         colorMap.put("Khaki", "Khaki");
+        colorMap.put("Kahki", "Khaki");
         colorMap.put("orange", "Orange");
+        colorMap.put("Orange", "Orange");
+        colorMap.put("Oran", "Orange");
+        colorMap.put("Orage", "Orange");
         colorMap.put("Ivory", "Beige");
         colorMap.put("Brown", "Brown");
+        colorMap.put("Browm", "Brown");
         colorMap.put("Nvay Blue", "Blue");
         colorMap.put("Black", "Black");
+        colorMap.put("black", "Black");
         colorMap.put("Multicolor", "Multicolor");
     }
 
@@ -192,7 +200,9 @@ public class ChairishConstants {
         materialMap.put("Wool","wool");
         materialMap.put("Handwoven","wool");
         materialMap.put("Mo Hair","hair");
+        materialMap.put("Mohair","hair");
         materialMap.put("Textile Recyle","textile");
+        materialMap.put("Textile Recycle","textile");
 
     }
 

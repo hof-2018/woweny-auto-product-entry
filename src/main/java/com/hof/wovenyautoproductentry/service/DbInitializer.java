@@ -17,7 +17,7 @@ import java.util.Objects;
 
 @Component
 public class DbInitializer {
-    private static final String CSV_FILE_PATH = "export_2020-06-21.csv";
+    private static final String CSV_FILE_PATH = "export_2021-01-17.csv";
     private static final String AMARA_CSV_FILE_PATH = "AmaraChairishCsv.csv";
     private static final Character CSV_SPLIT_BY = ';';
 
